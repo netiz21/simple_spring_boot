@@ -30,4 +30,9 @@ public class IndexController {
         }
         return "Found no message by name " + name;
     }
+
+    @RequestMapping("/reload")
+    public String reload() {
+        return "Reload success";
+    }
 }
