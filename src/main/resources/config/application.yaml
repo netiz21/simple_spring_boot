@@ -1,2 +1,9 @@
 info:
   name: simple_spring_boot
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/
+    username:
+    password:
