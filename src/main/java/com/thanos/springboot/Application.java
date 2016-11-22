@@ -1,6 +1,8 @@
 package com.thanos.springboot;
 
 import com.thanos.springboot.common.CustomApplicationListener;
+
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 1.0
  */
 @SpringBootApplication
+@MapperScan("com.thanos.springboot.dao")
 public class Application {
 
     public static void main(String[] args) {

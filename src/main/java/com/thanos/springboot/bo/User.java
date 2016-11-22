@@ -8,7 +8,8 @@ public class User {
 
     private Long id;
     private String name;
-    private String age;
+    private Integer sex;
+    private String descp;
 
     public Long getId() {
         return id;
@@ -26,11 +27,19 @@ public class User {
         this.name = name;
     }
 
-    public String getAge() {
-        return age;
+    public Integer getSex() {
+        return sex;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getDescp() {
+        return descp;
+    }
+
+    public void setDescp(String descp) {
+        this.descp = descp;
     }
 }
