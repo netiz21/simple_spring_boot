@@ -2,9 +2,9 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:mysql://100.85.69.70:3031/uc_security?autoReconnect=true&maxReconnects=10&useUnicode=true&characterEncoding=utf8
-    username: frontapp
-    password: SJ1hjv7Yj6
+    url: jdbc:mysql://127.0.0.1:3306/userinfo?autoReconnect=true&maxReconnects=10&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: xxxxxx
 mybatis:
   type-aliases-package: com.thanos.springboot.bo
   mapper-locations: classpath*:mappers/**/*.xml
