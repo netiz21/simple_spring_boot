@@ -15,4 +15,9 @@
     where id = #{id}
   </select>
 
+  <select id="findAll" resultMap="UserResultMap">
+    select id, name, sex, descp
+    from user
+  </select>
+
 </mapper>
