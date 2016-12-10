@@ -10,12 +10,12 @@ import org.springframework.context.ApplicationListener;
  * @version 1.0
  */
 public enum CustomApplicationListener implements ApplicationListener {
-    INSTANCE;
+  INSTANCE;
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomApplicationListener.class);
+  private static final Logger logger = LoggerFactory.getLogger(CustomApplicationListener.class);
 
-    @Override
-    public void onApplicationEvent(ApplicationEvent applicationEvent) {
-        logger.info("Received event {}", applicationEvent);
-    }
+  @Override
+  public void onApplicationEvent(ApplicationEvent applicationEvent) {
+    logger.info("Received event {}", applicationEvent);
+  }
 }

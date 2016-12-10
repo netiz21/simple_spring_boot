@@ -11,22 +11,22 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(locations = "classpath:message.yaml", prefix = "msg")
 public class MessageResource {
 
-    private String name;
-    private String content;
+  private String name;
+  private String content;
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
 }

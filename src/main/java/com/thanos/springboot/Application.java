@@ -14,9 +14,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.thanos.springboot.dao")
 public class Application {
 
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(Application.class);
-        app.addListeners(CustomApplicationListener.INSTANCE);
-        app.run(args);
-    }
+  public static void main(String[] args) {
+    SpringApplication app = new SpringApplication(Application.class);
+    app.addListeners(CustomApplicationListener.INSTANCE);
+    app.run(args);
+  }
 }

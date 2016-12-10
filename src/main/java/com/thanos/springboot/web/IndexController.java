@@ -20,35 +20,35 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/index")
 public class IndexController {
-    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
+  private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @Autowired
-    private MessageResource messageResource;
+  @Autowired
+  private MessageResource messageResource;
 
-    @RequestMapping("/hello")
-    public String index() {
-        return "Hello, world!";
+  @RequestMapping("/hello")
+  public String index() {
+    return "Hello, world!";
+  }
+
+  @RequestMapping("/message")
+  public String message(String name) {
+    if (Objects.equals(messageResource.getName(), name)) {
+      return messageResource.getContent();
     }
+    return "Found no message by name " + name;
+  }
 
-    @RequestMapping("/message")
-    public String message(String name) {
-        if (Objects.equals(messageResource.getName(), name)) {
-            return messageResource.getContent();
-        }
-        return "Found no message by name " + name;
-    }
+  @RequestMapping("/reload")
+  public String reload() {
+    return "Reload success";
+  }
 
-    @RequestMapping("/reload")
-    public String reload() {
-        return "Reload success";
-    }
-
-    @RequestMapping("/standard")
-    public StandardResponse<Void> standard(HttpServletRequest req) {
-        logger.info("Request uri = {}", req.getRequestURI());
-        logger.info("Request url = {}", req.getRequestURL());
-        logger.info("Request context path = {}", req.getContextPath());
-        logger.info("url + query string = {}", req.getRequestURL().toString() + "?" + req.getQueryString());
-        return StandardResponse.ok();
-    }
+  @RequestMapping("/standard")
+  public StandardResponse<Void> standard(HttpServletRequest req) {
+    logger.info("Request uri = {}", req.getRequestURI());
+    logger.info("Request url = {}", req.getRequestURL());
+    logger.info("Request context path = {}", req.getContextPath());
+    logger.info("url + query string = {}", req.getRequestURL().toString() + "?" + req.getQueryString());
+    return StandardResponse.ok();
+  }
 }

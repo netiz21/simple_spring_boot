@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    User findById(@Param("id") Long id);
+  User findById(@Param("id") Long id);
 
-    List<User> findAll();
+  List<User> findAll();
 }

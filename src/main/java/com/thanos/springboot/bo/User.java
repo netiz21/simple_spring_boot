@@ -6,40 +6,40 @@ package com.thanos.springboot.bo;
  */
 public class User {
 
-    private Long id;
-    private String name;
-    private Integer sex;
-    private String descp;
+  private Long id;
+  private String name;
+  private Integer sex;
+  private String descp;
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Integer getSex() {
-        return sex;
-    }
+  public Integer getSex() {
+    return sex;
+  }
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
+  public void setSex(Integer sex) {
+    this.sex = sex;
+  }
 
-    public String getDescp() {
-        return descp;
-    }
+  public String getDescp() {
+    return descp;
+  }
 
-    public void setDescp(String descp) {
-        this.descp = descp;
-    }
+  public void setDescp(String descp) {
+    this.descp = descp;
+  }
 }

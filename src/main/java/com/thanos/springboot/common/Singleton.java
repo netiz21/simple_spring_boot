@@ -6,20 +6,20 @@ package com.thanos.springboot.common;
  */
 public enum Singleton {
 
-    INSTANCE("hihihi");
+  INSTANCE("hihihi");
 
-    Singleton(String name) {
-        this.name = name;
-    }
+  Singleton(String name) {
+    this.name = name;
+  }
 
-    private String name;
+  private String name;
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    @Override
-    public String toString() {
-        return "Ordinal: " + this.ordinal() + ", name: " + this.name;
-    }
+  @Override
+  public String toString() {
+    return "Ordinal: " + this.ordinal() + ", name: " + this.name;
+  }
 }
