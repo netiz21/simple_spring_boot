@@ -1,6 +1,5 @@
 package com.thanos.btrace.script;
 
-import com.sun.btrace.BTraceUtils.Strings;
 import com.sun.btrace.annotations.BTrace;
 import com.sun.btrace.annotations.Duration;
 import com.sun.btrace.annotations.Kind;
@@ -8,6 +7,7 @@ import com.sun.btrace.annotations.Location;
 import com.sun.btrace.annotations.OnMethod;
 import com.sun.btrace.annotations.ProbeClassName;
 import com.sun.btrace.annotations.ProbeMethodName;
+import com.sun.btrace.annotations.Where;
 
 import static com.sun.btrace.BTraceUtils.print;
 import static com.sun.btrace.BTraceUtils.println;
@@ -17,16 +17,16 @@ import static com.sun.btrace.BTraceUtils.println;
  * @version 1.0
  */
 @BTrace
-public class RestControllerMethod {
+public class WebServiceMonitor {
 
   @OnMethod(clazz = "@org.springframework.web.bind.annotation.RestController",
-      method = "/.*/",
-      location = @Location(Kind.RETURN))
+      method="/.+/",
+      location = @Location(value = Kind.RETURN, where = Where.BEFORE))
   public static void onMethod(@ProbeClassName String probClass, @ProbeMethodName String probMethod,
                               @Duration long consume) {
-    print("entered " + probClass);
-    print("." + probMethod);
-    print(" consume " + Strings.str(consume / 1000) + " ms");
+    print("invoke " + probClass);
+    print("#" + probMethod);
+    print(" consume " + consume / 1000000 + " ms");
     println();
   }
 }

@@ -34,7 +34,10 @@ public class UserController {
 
   @RequestMapping(value = "/users", method = RequestMethod.GET)
   public StandardResponse<List<User>> users() {
+    long begin = System.currentTimeMillis();
     List<User> users = userService.findAll();
+    logger.info("invoke UserController#users success, time consume = {}",
+        System.currentTimeMillis() - begin);
     return StandardResponse.ok(users);
   }
 }
