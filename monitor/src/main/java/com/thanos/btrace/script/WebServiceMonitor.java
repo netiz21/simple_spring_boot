@@ -7,6 +7,7 @@ import com.sun.btrace.annotations.Location;
 import com.sun.btrace.annotations.OnMethod;
 import com.sun.btrace.annotations.ProbeClassName;
 import com.sun.btrace.annotations.ProbeMethodName;
+import com.sun.btrace.annotations.Return;
 import com.sun.btrace.annotations.Where;
 
 import static com.sun.btrace.BTraceUtils.print;
@@ -23,9 +24,10 @@ public class WebServiceMonitor {
       method="/.+/",
       location = @Location(value = Kind.RETURN, where = Where.BEFORE))
   public static void onMethod(@ProbeClassName String probClass, @ProbeMethodName String probMethod,
-                              @Duration long consume) {
+                              @Duration long consume, @Return Object result) {
     print("invoke " + probClass);
     print("#" + probMethod);
+    print(" return " + result);
     print(" consume " + consume / 1000000 + " ms");
     println();
   }
