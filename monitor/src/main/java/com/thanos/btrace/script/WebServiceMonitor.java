@@ -11,6 +11,7 @@ import com.sun.btrace.annotations.Return;
 import com.sun.btrace.annotations.Where;
 
 import static com.sun.btrace.BTraceUtils.print;
+import static com.sun.btrace.BTraceUtils.printFields;
 import static com.sun.btrace.BTraceUtils.println;
 
 /**
@@ -22,13 +23,12 @@ public class WebServiceMonitor {
 
   @OnMethod(clazz = "@org.springframework.web.bind.annotation.RestController",
       method="/.+/",
-      location = @Location(value = Kind.RETURN, where = Where.BEFORE))
+      location = @Location(Kind.RETURN))
   public static void onMethod(@ProbeClassName String probClass, @ProbeMethodName String probMethod,
-                              @Duration long consume, @Return Object result) {
+                              @Duration long consume) {
     print("invoke " + probClass);
     print("#" + probMethod);
-    print(" return " + result);
-    print(" consume " + consume / 1000000 + " ms");
+    print(" cost " + consume / 1000000 + " ms");
     println();
   }
 }

@@ -22,7 +22,7 @@ public class MethodLineMonitor {
       location = @Location(value = Kind.LINE, line = -1))
   public static void onMonitor(@ProbeClassName String clazz, @ProbeMethodName String method,
                                int line) {
-    print("stack " + clazz);
+    print("current position " + clazz);
     print("#" + method);
     print(" : " + line);
     println();
