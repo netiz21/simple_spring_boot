@@ -9,6 +9,7 @@ import com.sun.btrace.annotations.ProbeMethodName;
 
 import static com.sun.btrace.BTraceUtils.print;
 import static com.sun.btrace.BTraceUtils.println;
+import static com.sun.btrace.BTraceUtils.timeNanos;
 
 /**
  * @author peiheng.zph created on 16/12/14 下午2:21
@@ -20,8 +21,10 @@ public class MethodLineMonitor {
   @OnMethod(clazz = "com.thanos.springboot.web.UserController",
       method = "/.*/",
       location = @Location(value = Kind.LINE, line = -1))
-  public static void onMonitor(@ProbeClassName String clazz, @ProbeMethodName String method,
+  public static void onMonitor(@ProbeClassName String clazz,
+                               @ProbeMethodName String method,
                                int line) {
+    print(timeNanos());
     print("current position " + clazz);
     print("#" + method);
     print(" : " + line);

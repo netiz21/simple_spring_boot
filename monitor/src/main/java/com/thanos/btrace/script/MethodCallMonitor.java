@@ -10,6 +10,7 @@ import com.sun.btrace.annotations.TargetInstance;
 import com.sun.btrace.annotations.TargetMethodOrField;
 import com.sun.btrace.annotations.Where;
 
+import static com.sun.btrace.BTraceUtils.jstack;
 import static com.sun.btrace.BTraceUtils.print;
 import static com.sun.btrace.BTraceUtils.println;
 
@@ -26,6 +27,7 @@ public class MethodCallMonitor {
   public static void onMonitor(@ProbeClassName String probClass, @TargetInstance Object instance,
                                @TargetMethodOrField String method, @Duration long duration) {
     print("invoke " + probClass);
+    jstack();
     print(" " + instance + "#" + method);
     print(" cost " + duration / 1000000 + "ms");
     println();

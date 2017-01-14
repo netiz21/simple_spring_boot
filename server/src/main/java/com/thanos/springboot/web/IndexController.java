@@ -47,6 +47,7 @@ public class IndexController {
   public StandardResponse<Void> standard(HttpServletRequest req) {
     logger.info("Request uri = {}", req.getRequestURI());
     logger.info("Request url = {}", req.getRequestURL());
+    logger.info("Servlet path = {}", req.getServletPath());
     logger.info("Request context path = {}", req.getContextPath());
     logger.info("url + query string = {}", req.getRequestURL().toString() + "?" + req.getQueryString());
     return StandardResponse.ok();
