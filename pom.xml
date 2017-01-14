@@ -17,6 +17,6 @@
   <modules>
     <module>server</module>
     <module>parent</module>
-    <module>monitor</module>
+    <module>btrace-script</module>
   </modules>
 </project>
