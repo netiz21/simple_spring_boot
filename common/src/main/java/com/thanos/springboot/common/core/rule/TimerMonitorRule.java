@@ -2,7 +2,9 @@ package com.thanos.springboot.common.core.rule;
 
 import com.alibaba.fastjson.JSON;
 import com.thanos.springboot.common.core.condition.TimerMonitorCondition;
-import com.thanos.springboot.common.core.operator.MathOperator;
+import com.thanos.springboot.common.core.expression.ThresholdExpression;
+import com.thanos.springboot.common.core.expression.operator.MathOperator;
+import com.thanos.springboot.common.core.expression.timeunit.SupportedTimeUnit;
 import com.thanos.springboot.common.core.target.TimerMonitorTarget;
 import com.thanos.springboot.common.util.CollectionUtils;
 
@@ -38,7 +40,7 @@ public interface TimerMonitorRule extends MonitorRule<String, Double> {
         }
 
         private static class RegularTimerMonitorRule implements TimerMonitorRule {
-            private static final Pattern pattern = Pattern.compile("(\\d+)\\s?([hmd])\\s.([<>]=.)\\s?(\\d+)");
+            private static final Pattern pattern = Pattern.compile("(\\d+)\\s*([hmd])\\s*([<>]=?)\\s*(\\d+)");
 
             private String keyword;
             private String threshold;
@@ -67,10 +69,10 @@ public interface TimerMonitorRule extends MonitorRule<String, Double> {
 
             private ThresholdExpression parseThresholdExpression(String threshold) {
                 Matcher matcher = pattern.matcher(threshold);
-                while (matcher.find()) {
+                if (matcher.find()) {
                     ThresholdExpression expression = new ThresholdExpression();
                     expression.setTimeCount(Integer.valueOf(matcher.group(1)));
-
+                    expression.setTimeUnit(SupportedTimeUnit.of(matcher.group(2)).toTimeUnit());
                     expression.setMathOperator(MathOperator.of(matcher.group(3)));
                     expression.setThreshold(Integer.valueOf(matcher.group(4)));
                     return expression;
@@ -124,7 +126,7 @@ public interface TimerMonitorRule extends MonitorRule<String, Double> {
                     throw new IllegalStateException("Threshold is null!");
                 }
                 if (!pattern.matcher(threshold).matches()) {
-                    throw new IllegalStateException("Threshold is not illegal!");
+                    throw new IllegalStateException("Threshold is illegal!");
                 }
             }
 
@@ -142,45 +144,6 @@ public interface TimerMonitorRule extends MonitorRule<String, Double> {
             }
 
             public void setThreshold(String threshold) {
-                this.threshold = threshold;
-            }
-        }
-
-        private static class ThresholdExpression {
-            private int timeCount;
-            private TimeUnit timeUnit;
-            private MathOperator mathOperator;
-            private double threshold;
-
-            public int getTimeCount() {
-                return timeCount;
-            }
-
-            public void setTimeCount(int timeCount) {
-                this.timeCount = timeCount;
-            }
-
-            public TimeUnit getTimeUnit() {
-                return timeUnit;
-            }
-
-            public void setTimeUnit(TimeUnit timeUnit) {
-                this.timeUnit = timeUnit;
-            }
-
-            public MathOperator getMathOperator() {
-                return mathOperator;
-            }
-
-            public void setMathOperator(MathOperator mathOperator) {
-                this.mathOperator = mathOperator;
-            }
-
-            public double getThreshold() {
-                return threshold;
-            }
-
-            public void setThreshold(double threshold) {
                 this.threshold = threshold;
             }
         }
