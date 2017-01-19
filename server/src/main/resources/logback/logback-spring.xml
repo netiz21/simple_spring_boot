@@ -6,7 +6,7 @@
   <property resource="logback/monitor/rule.properties" />
 
   <!-- custom filter filter -->
-  <turboFilter class="com.thanos.log.support.filter.TimerMonitorFilter">
+  <turboFilter class="com.thanos.log.support.filter.TimerErrorFilter">
     <monitorRuleStr>${monitorRule}</monitorRuleStr>
   </turboFilter>
 

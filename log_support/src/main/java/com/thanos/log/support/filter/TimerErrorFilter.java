@@ -51,7 +51,7 @@ public class TimerErrorFilter extends BaseMonitorFilter<String, Double> {
       return FilterReply.NEUTRAL;
     }
 
-    String errorMsg = t.getMessage();
+    String errorMsg = t.getClass().getName() + " " + t.getMessage();
     for (MonitorRule<String, Double> monitorRule : monitorRules) {
       String keyword = monitorRule.target().value();
       if (!errorMsg.contains(keyword)) {

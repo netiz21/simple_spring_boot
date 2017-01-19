@@ -6,6 +6,7 @@ import com.thanos.springboot.common.StandardResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,12 +26,12 @@ public class IndexController {
   @Autowired
   private MessageResource messageResource;
 
-  @RequestMapping("/hello")
+  @GetMapping("/hello")
   public String index() {
     return "Hello, world!";
   }
 
-  @RequestMapping("/message")
+  @GetMapping("/message")
   public String message(String name) {
     if (Objects.equals(messageResource.getName(), name)) {
       return messageResource.getContent();
@@ -38,12 +39,12 @@ public class IndexController {
     return "Found no message by name " + name;
   }
 
-  @RequestMapping("/reload")
+  @GetMapping("/reload")
   public String reload() {
     return "Reload success";
   }
 
-  @RequestMapping("/standard")
+  @GetMapping("/standard")
   public StandardResponse<Void> standard(HttpServletRequest req) {
     logger.info("Request uri = {}", req.getRequestURI());
     logger.info("Request url = {}", req.getRequestURL());
@@ -52,4 +53,17 @@ public class IndexController {
     logger.info("url + query string = {}", req.getRequestURL().toString() + "?" + req.getQueryString());
     return StandardResponse.ok();
   }
+
+  @GetMapping("/error")
+  public StandardResponse<Void> error(int input) {
+    try {
+      if (input < 10) {
+        throw new IllegalArgumentException("input is less than 10!");
+      }
+    } catch (Exception e) {
+      logger.error("Found exception!", e);
+    }
+    return StandardResponse.ok();
+  }
+
 }

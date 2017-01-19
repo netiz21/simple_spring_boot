@@ -7,9 +7,8 @@ import com.thanos.springboot.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,13 +25,13 @@ public class UserController {
   @Autowired
   private IUserService userService;
 
-  @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+  @GetMapping("/user/{id}")
   public StandardResponse<User> user(@PathVariable long id) {
     User user = userService.findById(id);
     return StandardResponse.ok(user);
   }
 
-  @RequestMapping(value = "/users", method = RequestMethod.GET)
+  @GetMapping("/users")
   public StandardResponse<List<User>> users() {
     long begin = System.currentTimeMillis();
     List<User> users = userService.findAll();
