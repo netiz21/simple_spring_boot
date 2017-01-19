@@ -11,19 +11,19 @@ import java.util.Map;
  */
 public final class CollectionUtils {
 
-    private CollectionUtils() {
-    }
+  private CollectionUtils() {
+  }
 
-    public static boolean isEmpty(Collection<?> collection) {
-        return collection == null || collection.isEmpty();
-    }
+  public static boolean isEmpty(Collection<?> collection) {
+    return collection == null || collection.isEmpty();
+  }
 
-    public static boolean isEmpty(Map<?, ?> map) {
-        return map == null || map.isEmpty();
-    }
+  public static boolean isEmpty(Map<?, ?> map) {
+    return map == null || map.isEmpty();
+  }
 
 
-    public static <T> List<T> emptyList() {
-        return Collections.emptyList();
-    }
+  public static <T> List<T> emptyList() {
+    return Collections.emptyList();
+  }
 }

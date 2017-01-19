@@ -8,21 +8,21 @@ import com.google.common.base.Function;
  */
 public class CurryDemo {
 
-    public static Function add(final int x) {
-        return new Function<Integer, Integer>() {
-            @Override
-            public Integer apply(Integer input) {
-                return x + input;
-            }
-        };
-    }
+  public static Function add(final int x) {
+    return new Function<Integer, Integer>() {
+      @Override
+      public Integer apply(Integer input) {
+        return x + input;
+      }
+    };
+  }
 
 
-    public static void main(String[] args) {
-        Function<Integer, Integer> incr = add(1);
-        Function<Integer, Integer> dIncr = add(2);
+  public static void main(String[] args) {
+    Function<Integer, Integer> incr = add(1);
+    Function<Integer, Integer> dIncr = add(2);
 
-        System.out.println(incr.apply(10));
-        System.out.print(dIncr.apply(10));
-    }
+    System.out.println(incr.apply(10));
+    System.out.print(dIncr.apply(10));
+  }
 }
