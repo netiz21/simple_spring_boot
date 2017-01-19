@@ -8,6 +8,12 @@ import java.util.concurrent.TimeUnit;
  */
 public enum SupportedTimeUnit {
 
+  SECOND("s") {
+    @Override
+    public TimeUnit toTimeUnit() {
+      return TimeUnit.SECONDS;
+    }
+  },
   MINUTE("m") {
     @Override
     public TimeUnit toTimeUnit() {

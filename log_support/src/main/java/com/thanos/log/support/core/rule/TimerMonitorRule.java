@@ -40,7 +40,7 @@ public interface TimerMonitorRule extends MonitorRule<String, Double> {
     }
 
     private static class RegularTimerMonitorRule implements TimerMonitorRule {
-      private static final Pattern pattern = Pattern.compile("(\\d+)\\s*([hmd])\\s*([<>]=?)\\s*(\\d+)");
+      private static final Pattern pattern = Pattern.compile("(\\d+)\\s*([smhd])\\s*([<>]=?)\\s*(\\d+)");
 
       private String keyword;
       private String threshold;
