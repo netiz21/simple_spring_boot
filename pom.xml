@@ -19,5 +19,6 @@
     <module>parent</module>
     <module>btrace-script</module>
     <module>log_support</module>
+    <module>common</module>
   </modules>
 </project>

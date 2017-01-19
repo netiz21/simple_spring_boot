@@ -1,14 +1,16 @@
 package com.thanos.log.support.core.rule;
 
+
 import com.thanos.log.support.core.condition.MonitorCondition;
+import com.thanos.log.support.core.condition.MonitorTarget;
 
 /**
- * @author peiheng.zph created on 17/1/18 下午7:33
+ * @author peiheng.zph created on 2017/1/18 21:17
  * @version 1.0
  */
-public class MonitorRule {
+public interface MonitorRule<E, T> {
 
-  private String keyword;
-  private MonitorCondition condition;
+  MonitorTarget<E> target();
 
+  MonitorCondition<T> condition();
 }
