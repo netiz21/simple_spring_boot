@@ -1,6 +1,5 @@
 package com.thanos.log.support.core.processor;
 
-
 import com.thanos.log.support.core.condition.MonitorTarget;
 import com.thanos.log.support.core.rule.MonitorRule;
 

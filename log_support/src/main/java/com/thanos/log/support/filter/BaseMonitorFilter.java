@@ -23,19 +23,15 @@ public abstract class BaseMonitorFilter<E, T> extends TurboFilter {
 
   private String monitorRuleStr;
 
-  private List<MonitorRule<E, T>> monitorRules;
+  protected List<? extends MonitorRule<E, T>> monitorRules;
 
-  private List<MonitorProcessor<E, T>> monitorProcessors;
-
-  protected abstract List<MonitorRule<E, T>> parseMonitorRules(String monitorRuleStr);
-
-  protected abstract List<MonitorProcessor<E, T>> initProcessors();
+  protected List<? extends MonitorProcessor<E, T>> monitorProcessors;
 
   protected abstract boolean isLevelMatch(Level level);
 
-  protected abstract FilterReply onNormalProcess(Marker marker, Logger logger, Level level, String format, Object[] params);
+  protected abstract List<? extends MonitorRule<E, T>> parseMonitorRules(String monitorRuleStr);
 
-  protected abstract FilterReply onErrorProcess(Marker marker, Logger logger, Level level, String format, Object[] params, Throwable t);
+  protected abstract List<? extends MonitorProcessor<E, T>> initProcessors();
 
   @Override
   public FilterReply decide(Marker marker, Logger logger, Level level, String format, Object[] params, Throwable t) {
@@ -60,7 +56,7 @@ public abstract class BaseMonitorFilter<E, T> extends TurboFilter {
   }
 
   protected void initMonitorRules() {
-    List<MonitorRule<E, T>> rules = parseMonitorRules(monitorRuleStr);
+    List<? extends MonitorRule<E, T>> rules = parseMonitorRules(monitorRuleStr);
     if (CollectionUtils.isEmpty(rules)) {
       logger.error("Parse no rules from rule str = {}", monitorRuleStr);
       throw new IllegalArgumentException("Error parse monitor rules!");
@@ -69,12 +65,32 @@ public abstract class BaseMonitorFilter<E, T> extends TurboFilter {
   }
 
   protected void initMonitorProcessors() {
-    List<MonitorProcessor<E, T>> processors = initProcessors();
+    List<? extends MonitorProcessor<E, T>> processors = initProcessors();
     if (CollectionUtils.isEmpty(processors)) {
       logger.error("No processors defined!");
       throw new IllegalStateException("No processors defined");
     }
     this.monitorProcessors = processors;
+  }
+
+  protected FilterReply onNormalProcess(Marker marker, Logger logger, Level level, String format, Object[] params) {
+    return FilterReply.NEUTRAL;
+  }
+
+  protected FilterReply onErrorProcess(Marker marker, Logger logger, Level level, String format, Object[] params, Throwable t) {
+    return FilterReply.NEUTRAL;
+  }
+
+  protected boolean process(MonitorRule<E, T> rule) {
+    for (MonitorProcessor<E, T> processor : monitorProcessors) {
+      if (!processor.supports(rule)) {
+        continue;
+      }
+      if (rule.condition().meets(processor.process(rule.target()))) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public void setMonitorRuleStr(String monitorRuleStr) {

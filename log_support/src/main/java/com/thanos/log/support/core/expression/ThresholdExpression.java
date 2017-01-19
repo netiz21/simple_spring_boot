@@ -1,6 +1,5 @@
 package com.thanos.log.support.core.expression;
 
-
 import com.thanos.log.support.core.expression.operator.MathOperator;
 
 import java.util.concurrent.TimeUnit;

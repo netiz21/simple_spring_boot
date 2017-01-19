@@ -1,11 +1,14 @@
 package com.thanos.log.support.filter;
 
 import com.thanos.log.support.core.processor.MonitorProcessor;
+import com.thanos.log.support.core.processor.TimerMonitorProcessor;
 import com.thanos.log.support.core.rule.MonitorRule;
+import com.thanos.log.support.core.rule.TimerMonitorRule;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.qos.logback.classic.Level;
@@ -20,28 +23,50 @@ public class TimerErrorFilter extends BaseMonitorFilter<String, Double> {
   private static final org.slf4j.Logger logger = LoggerFactory.getLogger(TimerErrorFilter.class);
 
   @Override
-  protected List<MonitorRule<String, Double>> parseMonitorRules(String monitorRuleStr) {
-
-    return null;
+  protected List<TimerMonitorRule> parseMonitorRules(String monitorRuleStr) {
+    return TimerMonitorRule.TimeMonitorRuleParser.parse(monitorRuleStr);
   }
 
   @Override
-  protected List<MonitorProcessor<String, Double>> initProcessors() {
-    return null;
+  protected List<? extends MonitorProcessor<String, Double>> initProcessors() {
+    TimerMonitorProcessor processor = new TimerMonitorProcessor();
+    List<TimerMonitorProcessor> list = new ArrayList<TimerMonitorProcessor>();
+    list.add(processor);
+    return list;
   }
 
   @Override
   protected boolean isLevelMatch(Level level) {
-    return false;
+    return level == Level.ERROR;
   }
 
   @Override
   protected FilterReply onNormalProcess(Marker marker, Logger logger, Level level, String format, Object[] params) {
-    return null;
+    return FilterReply.NEUTRAL;
   }
 
   @Override
   protected FilterReply onErrorProcess(Marker marker, Logger logger, Level level, String format, Object[] params, Throwable t) {
-    return null;
+    if (t == null) {
+      return FilterReply.NEUTRAL;
+    }
+
+    String errorMsg = t.getMessage();
+    for (MonitorRule<String, Double> monitorRule : monitorRules) {
+      String keyword = monitorRule.target().value();
+      if (!errorMsg.contains(keyword)) {
+        continue;
+      }
+      return replyOnHitKeyword(monitorRule);
+    }
+    return super.onErrorProcess(marker, logger, level, format, params, t);
   }
+
+  private FilterReply replyOnHitKeyword(MonitorRule<String, Double> monitorRule) {
+    if (process(monitorRule)) {
+      return FilterReply.NEUTRAL;
+    }
+    return FilterReply.DENY;
+  }
+
 }
