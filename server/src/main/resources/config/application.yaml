@@ -9,4 +9,5 @@ spring:
 mybatis:
   type-aliases-package: com.thanos.springboot.bo
   mapper-locations: classpath*:mappers/**/*.xml
-
+logging:
+    config: classpath:logback/logback-spring.xml
