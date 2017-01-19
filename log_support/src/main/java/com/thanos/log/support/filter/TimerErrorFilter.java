@@ -57,13 +57,14 @@ public class TimerErrorFilter extends BaseMonitorFilter<String, Double> {
       if (!errorMsg.contains(keyword)) {
         continue;
       }
-      return replyOnHitKeyword(monitorRule);
+      return replyOnHitKeyword(monitorRule, logger);
     }
     return super.onErrorProcess(marker, logger, level, format, params, t);
   }
 
-  private FilterReply replyOnHitKeyword(MonitorRule<String, Double> monitorRule) {
+  private FilterReply replyOnHitKeyword(MonitorRule<String, Double> monitorRule, Logger logger) {
     if (process(monitorRule)) {
+      logger.warn("Exception threshold meets monitor rule, rule = {}", monitorRule);
       return FilterReply.NEUTRAL;
     }
     return FilterReply.DENY;

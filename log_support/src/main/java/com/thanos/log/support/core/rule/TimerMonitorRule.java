@@ -146,6 +146,14 @@ public interface TimerMonitorRule extends MonitorRule<String, Double> {
       public void setThreshold(String threshold) {
         this.threshold = threshold;
       }
+
+      @Override
+      public String toString() {
+        return "RegularTimerMonitorRule{" +
+            "keyword='" + keyword + '\'' +
+            ", threshold='" + threshold + '\'' +
+            '}';
+      }
     }
   }
 }
