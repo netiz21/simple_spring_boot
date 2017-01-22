@@ -20,5 +20,6 @@
     <module>btrace-script</module>
     <module>log_support</module>
     <module>common</module>
+    <module>agent</module>
   </modules>
 </project>
