@@ -12,7 +12,7 @@ import java.lang.instrument.Instrumentation;
 public class CustomJavaAgent {
   private static final Logger logger = LoggerFactory.getLogger(CustomJavaAgent.class);
 
-  private static Instrumentation instrumentation;
+  private static volatile Instrumentation instrumentation;
 
   /**
    * JVM hook to statically load the javaagent at startup.
@@ -43,7 +43,11 @@ public class CustomJavaAgent {
    */
   public static void initialize() {
     if (instrumentation == null) {
-//      MyJavaAgentLoader.loadAgent();
+      CustomJavaAgentLoader.loadAgent();
     }
+  }
+
+  public static long sizeOf(Object object) {
+    return instrumentation.getObjectSize(object);
   }
 }

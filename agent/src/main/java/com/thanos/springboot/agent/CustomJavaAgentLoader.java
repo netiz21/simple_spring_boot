@@ -15,7 +15,7 @@ public class CustomJavaAgentLoader {
 
   static final Logger logger = LoggerFactory.getLogger(CustomJavaAgentLoader.class);
 
-  private static final String jarFilePath = "/home/dhruba/.m2/repository/"
+  private static final String jarFilePath = "/home/zph/.m2/repository/"
       + "javaagent-examples/javaagent-examples/1.0/"
       + "javaagent-examples-1.0-jar-with-dependencies.jar";
 
