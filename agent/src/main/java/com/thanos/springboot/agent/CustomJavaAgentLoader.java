@@ -15,12 +15,11 @@ public class CustomJavaAgentLoader {
 
   static final Logger logger = LoggerFactory.getLogger(CustomJavaAgentLoader.class);
 
-  private static final String jarFilePath = "/home/zph/.m2/repository/"
-      + "javaagent-examples/javaagent-examples/1.0/"
-      + "javaagent-examples-1.0-jar-with-dependencies.jar";
+  private static final String jarFilePath = "/Users/zph/.m2/repository/" +
+      "com/thanos/web/agent/1.0.0-SNAPSHOT/agent-1.0.0-SNAPSHOT-jar-with-dependencies.jar";
 
   public static void loadAgent() {
-    logger.info("dynamically loading javaagent");
+    logger.info("dynamically loading java agent");
     String nameOfRunningVM = ManagementFactory.getRuntimeMXBean().getName();
     int p = nameOfRunningVM.indexOf('@');
     String pid = nameOfRunningVM.substring(0, p);
