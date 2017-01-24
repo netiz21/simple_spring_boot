@@ -30,15 +30,24 @@ public class MyMainClass {
     logger.info("int i size is {}", CustomJavaAgent.sizeOf(i));
     logger.info("Integer j size is {}", CustomJavaAgent.sizeOf(j));
 
-    int[] array2 = new int[8];
+    int[] array1 = new int[1];
+    logger.info("int array with length {} consume size is {}", array1.length,
+        CustomJavaAgent.sizeOf(array1));
+    int[] array2 = new int[2];
     logger.info("int array with length {} consume size is {}", array2.length,
         CustomJavaAgent.sizeOf(array2));
-    int[] array = new int[16];
-    logger.info("int array with length {} consume size is {}", array.length,
-        CustomJavaAgent.sizeOf(array));
-    int[] array3 = new int[32];
+    int[] array3 = new int[3];
     logger.info("int array with length {} consume size is {}", array3.length,
         CustomJavaAgent.sizeOf(array3));
+    int[] array4 = new int[4];
+    logger.info("int array with length {} consume size is {}", array4.length,
+        CustomJavaAgent.sizeOf(array4));
+    int[] array5 = new int[5];
+    logger.info("int array with length {} consume size is {}", array5.length,
+        CustomJavaAgent.sizeOf(array5));
+    int[] array8 = new int[8];
+    logger.info("int array with length {} consume size is {}", array8.length,
+        CustomJavaAgent.sizeOf(array8));
 
     boolean b = false;
     logger.info("boolean b size is {}", CustomJavaAgent.sizeOf(b));
