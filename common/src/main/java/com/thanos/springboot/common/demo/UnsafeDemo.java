@@ -126,6 +126,14 @@ public class UnsafeDemo {
 
     System.out.println(sizeOf(guard[0]));
 
+    int i = 5;
+    Integer j = 3;
+    System.out.println("int i size is " + sizeOf(i));
+    System.out.println("Integer j size is "+ sizeOf(j));
+
+    Object o = new Object();
+    System.out.println("new object instance size is "+ sizeOf(o));
+
     System.out.println("==========================================");
   }
 }

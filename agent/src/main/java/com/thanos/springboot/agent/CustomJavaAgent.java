@@ -23,7 +23,7 @@ public class CustomJavaAgent {
   public static void premain(String args, Instrumentation inst) throws Exception {
     logger.info("premain method invoked with args: {} and inst: {}", args, inst);
     instrumentation = inst;
-//    instrumentation.addTransformer(new MyClassFileTransformer());
+    instrumentation.addTransformer(new CustomClassFileTransformer());
   }
 
   /**
@@ -35,7 +35,7 @@ public class CustomJavaAgent {
   public static void agentmain(String args, Instrumentation inst) throws Exception {
     logger.info("agentmain method invoked with args: {} and inst: {}", args, inst);
     instrumentation = inst;
-//    instrumentation.addTransformer(new MyClassFileTransformer());
+    instrumentation.addTransformer(new CustomClassFileTransformer());
   }
 
   /**
