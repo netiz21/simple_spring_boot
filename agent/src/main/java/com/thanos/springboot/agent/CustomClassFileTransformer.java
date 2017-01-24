@@ -1,7 +1,6 @@
 package com.thanos.springboot.agent;
 
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.Opcodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +12,7 @@ import java.security.ProtectionDomain;
  * @author peiheng.zph created on 17/1/24 上午10:24
  * @version 1.0
  */
-public class CustomClassFileTransformer implements ClassFileTransformer, Opcodes {
+public class CustomClassFileTransformer implements ClassFileTransformer {
   private static final Logger logger = LoggerFactory.getLogger(CustomClassFileTransformer.class);
 
   @Override
