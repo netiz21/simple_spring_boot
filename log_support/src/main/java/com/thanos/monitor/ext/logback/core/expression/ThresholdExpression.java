@@ -1,6 +1,6 @@
-package com.thanos.log.support.core.expression;
+package com.thanos.monitor.ext.logback.core.expression;
 
-import com.thanos.log.support.core.expression.operator.MathOperator;
+import com.thanos.monitor.ext.logback.core.expression.MathOperator;
 
 import java.util.concurrent.TimeUnit;
 

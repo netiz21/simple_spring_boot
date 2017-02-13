@@ -1,4 +1,4 @@
-package com.thanos.log.support.core.expression.timeunit;
+package com.thanos.monitor.ext.logback.core.expression;
 
 import java.util.concurrent.TimeUnit;
 

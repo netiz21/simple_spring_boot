@@ -19,8 +19,8 @@ import ch.qos.logback.core.spi.FilterReply;
  * @author peiheng.zph created on 2017/1/18 21:15
  * @version 1.0
  */
-public class TimerErrorFilter extends BaseMonitorFilter<String, Double> {
-  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(TimerErrorFilter.class);
+public class LogMonitorFilter extends BaseMonitorFilter<String, Double> {
+  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(LogMonitorFilter.class);
 
   @Override
   protected List<TimerMonitorRule> parseMonitorRules(String monitorRuleStr) {

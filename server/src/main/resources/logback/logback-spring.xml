@@ -6,8 +6,9 @@
   <property resource="logback/monitor/rule.properties" />
 
   <!-- custom filter filter -->
-  <turboFilter class="com.thanos.log.support.filter.TimerErrorFilter">
+  <turboFilter class="com.thanos.monitor.ext.logback.filter.LogMonitorFilter">
     <monitorRuleStr>${monitorRule}</monitorRuleStr>
+    <monitorContactStr>${monitorContact}</monitorContactStr>
   </turboFilter>
 
   <appender name="console" class="ch.qos.logback.core.ConsoleAppender">

@@ -1,6 +1,6 @@
 package com.thanos.log.support.core.condition;
 
-import com.thanos.log.support.core.expression.operator.MathOperator;
+import com.thanos.monitor.ext.logback.core.expression.MathOperator;
 
 /**
  * @author peiheng.zph created on 2017/1/18 21:18

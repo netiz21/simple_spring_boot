@@ -23,6 +23,8 @@ public abstract class BaseMonitorFilter<E, T> extends TurboFilter {
 
   private String monitorRuleStr;
 
+  private String monitorContactStr;
+
   protected List<? extends MonitorRule<E, T>> monitorRules;
 
   protected List<? extends MonitorProcessor<E, T>> monitorProcessors;
