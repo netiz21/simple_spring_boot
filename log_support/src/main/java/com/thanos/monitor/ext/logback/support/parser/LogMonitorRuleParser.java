@@ -1,9 +1,9 @@
-package com.thanos.monitor.ext.logback.support;
+package com.thanos.monitor.ext.logback.support.parser;
 
-import com.alibaba.fastjson.JSON;
 import com.thanos.monitor.ext.logback.core.rule.LogMonitorRule;
 import com.thanos.monitor.ext.logback.core.rule.RegularLogMonitorRule;
 import com.thanos.monitor.ext.logback.util.CollectionUtils;
+import com.thanos.monitor.ext.logback.util.JsonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,9 @@ import java.util.List;
 public class LogMonitorRuleParser {
 
   public static List<LogMonitorRule> parse(String monitorRuleStr) {
-    List<RegularLogMonitorRule> rules = JSON.parseArray(monitorRuleStr, RegularLogMonitorRule.class);
+    monitorRuleStr = escapeBackslashAsRegex(monitorRuleStr);
+
+    List<RegularLogMonitorRule> rules = JsonUtil.parseArray(monitorRuleStr, RegularLogMonitorRule.class);
     if (CollectionUtils.isEmpty(rules)) {
       return CollectionUtils.emptyList();
     }
@@ -28,14 +30,14 @@ public class LogMonitorRuleParser {
     return list;
   }
 
-  public static String escapeBackslash(String target, String replace) {
-    return target.replaceAll("\\\\", replace);
+  /**
+   * 对json中的正则进行处理，转成java能正确处理的形式
+   *
+   * @param target target
+   * @return proper regex string to process
+   */
+  private static String escapeBackslashAsRegex(String target) {
+    return target.replaceAll("\\\\", "\\\\\\\\");
   }
 
-  public static void main(String[] args) {
-    String s = "[{\"targetPattern\":\"BindException\",\"threshold\":\"3h > 5\",\"alertMsg\":\"BindException exceed threshold!\"}]";
-    String tmp = escapeBackslash(s, "@#@");
-    List<RegularLogMonitorRule> rules = JSON.parseArray(tmp, RegularLogMonitorRule.class);
-    System.out.println(rules);
-  }
 }

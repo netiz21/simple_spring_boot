@@ -30,4 +30,7 @@ public final class CollectionUtils {
     return Collections.emptyMap();
   }
 
+  public static <T> List<T> unmodifiableList(List<? extends T> list) {
+    return Collections.unmodifiableList(list);
+  }
 }

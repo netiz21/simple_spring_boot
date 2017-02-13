@@ -1,14 +1,19 @@
 package com.thanos.monitor.ext.logback.core.rule;
 
 import com.thanos.monitor.ext.logback.core.condition.LogMonitorCondition;
-import com.thanos.monitor.ext.logback.core.targ.RegularLogMonitorTarget;
-import com.thanos.monitor.ext.logback.core.targ.LogMonitorTarget;
-import com.thanos.monitor.ext.logback.core.trigger.LogMonitorTrigger;
-import com.thanos.monitor.ext.logback.core.expression.ThresholdExpression;
 import com.thanos.monitor.ext.logback.core.condition.RegularLogMonitorCondition;
 import com.thanos.monitor.ext.logback.core.expression.MathOperator;
 import com.thanos.monitor.ext.logback.core.expression.SupportedTimeUnit;
+import com.thanos.monitor.ext.logback.core.expression.ThresholdExpression;
+import com.thanos.monitor.ext.logback.core.targ.LogMonitorTarget;
+import com.thanos.monitor.ext.logback.core.targ.RegularLogMonitorTarget;
+import com.thanos.monitor.ext.logback.core.trigger.AlertType;
+import com.thanos.monitor.ext.logback.core.trigger.LogMonitorTrigger;
+import com.thanos.monitor.ext.logback.core.trigger.RegularMultiLogMonitorTrigger;
+import com.thanos.monitor.ext.logback.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +32,7 @@ public class RegularLogMonitorRule implements LogMonitorRule {
   private String targetPattern;
   private String targetLevel = "ALL";
   private String threshold;
-  private String alertType = "LOG";
+  private List<String> alertType;
   private String alertMsg;
   private boolean ignoreOrigin = true;
 
@@ -50,11 +55,6 @@ public class RegularLogMonitorRule implements LogMonitorRule {
     return monitorTrigger;
   }
 
-  @Override
-  public boolean ignoreOrigin() {
-    return ignoreOrigin;
-  }
-
   public void initialize() {
     if (initialized) {
       return;
@@ -63,25 +63,34 @@ public class RegularLogMonitorRule implements LogMonitorRule {
     checkState();
     initialized = true;
 
+    // generate monitor target
     ThresholdExpression expr = parseThresholdExpression(threshold);
     monitorTarget = generateTarget(targetPattern, targetLevel, expr.getTimeCount(),
-        expr.getTimeUnit());
+        expr.getTimeUnit(), ignoreOrigin);
+
+    // generate monitor condition
     monitorCondition = generateCondition(expr.getMathOperator(), expr.getThreshold());
+
+    // generate monitor trigger
+    if (CollectionUtils.isEmpty(alertType)) {
+      alertType = new ArrayList<String>();
+      alertType.add(AlertType.LOG.getType());
+    }
     monitorTrigger = generateTrigger(alertMsg, alertType);
   }
 
   private void checkState() {
     if (targetPattern == null) {
-      throw new IllegalStateException("targetPattern can't be null!");
+      throw new IllegalArgumentException("targetPattern can't be null!");
     }
     if (threshold == null) {
-      throw new IllegalStateException("threshold can't be null!");
+      throw new IllegalArgumentException("threshold can't be null!");
     }
     if (!EXPRESSION_PATTERN.matcher(threshold).matches()) {
-      throw new IllegalStateException("Threshold is illegal!");
+      throw new IllegalArgumentException("Threshold is illegal!");
     }
     if (alertMsg == null) {
-      throw new IllegalStateException("alertMsg can't be null!");
+      throw new IllegalArgumentException("alertMsg can't be null!");
     }
   }
 
@@ -99,16 +108,17 @@ public class RegularLogMonitorRule implements LogMonitorRule {
     return expression;
   }
 
-  private LogMonitorTarget generateTarget(String targetPattern, String targetLevel, int timeCount, TimeUnit timeUnit) {
-    return RegularLogMonitorTarget.of(targetPattern, targetLevel, timeCount, timeUnit);
+  private LogMonitorTarget generateTarget(String targetPattern, String targetLevel, int timeCount,
+                                          TimeUnit timeUnit, boolean ignoreOrigin) {
+    return RegularLogMonitorTarget.of(targetPattern, targetLevel, timeCount, timeUnit, ignoreOrigin);
   }
 
   private LogMonitorCondition generateCondition(MathOperator mathOperator, double threshold) {
     return RegularLogMonitorCondition.of(mathOperator, threshold);
   }
 
-  private LogMonitorTrigger generateTrigger(String alertMsg, String alertType) {
-    return null;
+  private LogMonitorTrigger generateTrigger(String alertMsg, List<String> alertTypes) {
+    return RegularMultiLogMonitorTrigger.of(alertMsg, alertTypes);
   }
 
   public String getTargetPattern() {
@@ -135,11 +145,11 @@ public class RegularLogMonitorRule implements LogMonitorRule {
     this.threshold = threshold;
   }
 
-  public String getAlertType() {
+  public List<String> getAlertType() {
     return alertType;
   }
 
-  public void setAlertType(String alertType) {
+  public void setAlertType(List<String> alertType) {
     this.alertType = alertType;
   }
 

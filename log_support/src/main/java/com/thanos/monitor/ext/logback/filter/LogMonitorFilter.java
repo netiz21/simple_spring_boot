@@ -5,7 +5,8 @@ import com.thanos.monitor.ext.logback.core.event.LogEventFactory;
 import com.thanos.monitor.ext.logback.core.processor.LogMonitorProcessor;
 import com.thanos.monitor.ext.logback.core.processor.RegularLogMonitorProcessor;
 import com.thanos.monitor.ext.logback.core.rule.LogMonitorRule;
-import com.thanos.monitor.ext.logback.support.LogMonitorRuleParser;
+import com.thanos.monitor.ext.logback.support.contact.MonitorContacts;
+import com.thanos.monitor.ext.logback.support.parser.LogMonitorRuleParser;
 import com.thanos.monitor.ext.logback.util.CollectionUtils;
 
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,7 @@ public class LogMonitorFilter extends TurboFilter {
   protected void initialize() {
     initMonitorRules();
     initMonitorProcessors();
+    initMonitorContacts();
   }
 
   protected void initMonitorRules() {
@@ -57,6 +59,10 @@ public class LogMonitorFilter extends TurboFilter {
     monitorProcessors.add(processor);
   }
 
+  protected void initMonitorContacts() {
+    MonitorContacts.init(monitorContactStr);
+  }
+
   @Override
   public FilterReply decide(Marker marker, Logger logger, Level level, String format, Object[] params, Throwable t) {
     LogEvent logEvent = LogEventFactory.newEvent(logger, level, format, params, t);
@@ -68,7 +74,7 @@ public class LogMonitorFilter extends TurboFilter {
       }
 
       onHitRule(rule);
-      if (rule.ignoreOrigin()) {
+      if (rule.target().ignoreOrigin()) {
         reply = FilterReply.DENY;
       }
     }

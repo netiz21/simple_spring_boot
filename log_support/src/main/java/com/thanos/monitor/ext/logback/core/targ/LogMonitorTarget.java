@@ -22,4 +22,6 @@ public interface LogMonitorTarget extends MonitorTarget {
   TimeUnit timeUnit();
 
   boolean match(LogEvent event);
+
+  boolean ignoreOrigin();
 }

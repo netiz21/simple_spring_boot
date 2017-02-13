@@ -3,7 +3,6 @@ package com.thanos.monitor.ext.logback.core.targ;
 import com.thanos.monitor.ext.logback.core.event.LogEvent;
 
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ch.qos.logback.classic.Level;
@@ -17,15 +16,18 @@ public class RegularLogMonitorTarget implements LogMonitorTarget {
   private Level level;
   private int timeCount;
   private TimeUnit timeUnit;
+  private boolean ignoreOrigin;
 
   public RegularLogMonitorTarget() {
   }
 
-  public RegularLogMonitorTarget(String pattern, Level level, int timeCount, TimeUnit timeUnit) {
+  public RegularLogMonitorTarget(String pattern, Level level, int timeCount, TimeUnit timeUnit,
+                                 boolean ignoreOrigin) {
     this.pattern = pattern;
     this.level = level;
     this.timeCount = timeCount;
     this.timeUnit = timeUnit;
+    this.ignoreOrigin = ignoreOrigin;
   }
 
   @Override
@@ -50,13 +52,20 @@ public class RegularLogMonitorTarget implements LogMonitorTarget {
 
   @Override
   public boolean match(LogEvent event) {
+    // TODO: 17/2/13
     Pattern p = Pattern.compile(pattern);
     event.throwable();
     return false;
   }
 
-  public static LogMonitorTarget of(String targetPattern, String targetLevel, int timeCount, TimeUnit timeUnit) {
+  @Override
+  public boolean ignoreOrigin() {
+    return ignoreOrigin;
+  }
+
+  public static LogMonitorTarget of(String targetPattern, String targetLevel, int timeCount,
+                                    TimeUnit timeUnit, boolean ignoreOrigin) {
     Level level = Level.toLevel(targetLevel, Level.ALL);
-    return new RegularLogMonitorTarget(targetPattern, level, timeCount, timeUnit);
+    return new RegularLogMonitorTarget(targetPattern, level, timeCount, timeUnit, ignoreOrigin);
   }
 }

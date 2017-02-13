@@ -16,6 +16,4 @@ public interface LogMonitorRule extends MonitorRule {
   LogMonitorCondition condition();
 
   LogMonitorTrigger trigger();
-
-  boolean ignoreOrigin();
 }
