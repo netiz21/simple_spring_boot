@@ -7,7 +7,7 @@ import com.thanos.monitor.ext.logback.core.processor.RegularLogMonitorProcessor;
 import com.thanos.monitor.ext.logback.core.rule.LogMonitorRule;
 import com.thanos.monitor.ext.logback.support.contact.MonitorContacts;
 import com.thanos.monitor.ext.logback.support.parser.LogMonitorRuleParser;
-import com.thanos.monitor.ext.logback.util.CollectionUtils;
+import com.thanos.monitor.ext.logback.util.CollectionUtil;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
@@ -47,7 +47,7 @@ public class LogMonitorFilter extends TurboFilter {
 
   protected void initMonitorRules() {
     this.monitorRules = LogMonitorRuleParser.parse(monitorRuleStr);
-    if (CollectionUtils.isEmpty(monitorRules)) {
+    if (CollectionUtil.isEmpty(monitorRules)) {
       LOG.error("Parse no rules from rule str = {}", monitorRuleStr);
       throw new IllegalArgumentException("Error parse monitor rules!");
     }

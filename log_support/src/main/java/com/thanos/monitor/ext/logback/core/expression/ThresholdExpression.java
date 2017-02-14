@@ -1,7 +1,5 @@
 package com.thanos.monitor.ext.logback.core.expression;
 
-import com.thanos.monitor.ext.logback.core.expression.MathOperator;
-
 import java.util.concurrent.TimeUnit;
 
 /**

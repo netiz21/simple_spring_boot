@@ -9,9 +9,9 @@ import java.util.Map;
  * @author peiheng.zph created on 2017/1/18 23:10
  * @version 1.0
  */
-public final class CollectionUtils {
+public final class CollectionUtil {
 
-  private CollectionUtils() {
+  private CollectionUtil() {
   }
 
   public static boolean isEmpty(Collection<?> collection) {

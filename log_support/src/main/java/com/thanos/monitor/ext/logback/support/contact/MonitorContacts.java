@@ -1,6 +1,6 @@
 package com.thanos.monitor.ext.logback.support.contact;
 
-import com.thanos.monitor.ext.logback.util.CollectionUtils;
+import com.thanos.monitor.ext.logback.util.CollectionUtil;
 import com.thanos.monitor.ext.logback.util.JsonUtil;
 
 import java.util.List;
@@ -16,16 +16,16 @@ public final class MonitorContacts {
   private static volatile boolean initialized = false;
 
   public static void init(String contactJsonStr) {
-    contactInfoList = CollectionUtils.unmodifiableList(JsonUtil.parseArray(contactJsonStr,
+    contactInfoList = CollectionUtil.unmodifiableList(JsonUtil.parseArray(contactJsonStr,
         ContactInfo.class));
     initialized = true;
   }
 
-  public static List<ContactInfo> provideContact() {
+  public static List<ContactInfo> allContact() {
     checkState();
 
-    if (CollectionUtils.isEmpty(contactInfoList)) {
-      return CollectionUtils.emptyList();
+    if (CollectionUtil.isEmpty(contactInfoList)) {
+      return CollectionUtil.emptyList();
     }
     return contactInfoList;
   }

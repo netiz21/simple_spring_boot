@@ -1,6 +1,6 @@
 package com.thanos.monitor.ext.logback.core.trigger;
 
-import com.thanos.monitor.ext.logback.util.CollectionUtils;
+import com.thanos.monitor.ext.logback.util.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class RegularMultiLogMonitorTrigger implements LogMonitorTrigger {
 
   public static LogMonitorTrigger of(String alertMsg, List<String> alertTypes) {
     List<LogMonitorTrigger> triggers = new ArrayList<LogMonitorTrigger>();
-    if (CollectionUtils.isEmpty(alertTypes)) {
+    if (CollectionUtil.isEmpty(alertTypes)) {
       return new RegularMultiLogMonitorTrigger(triggers);
     }
 

@@ -6,7 +6,7 @@ import com.thanos.monitor.ext.logback.core.expression.MathOperator;
  * @author peiheng.zph created on 17/2/12 下午6:35
  * @version 1.0
  */
-public class RegularLogMonitorCondition implements LogMonitorCondition{
+public class RegularLogMonitorCondition implements LogMonitorCondition {
   private MathOperator operator;
   private double threshold;
 
@@ -18,17 +18,12 @@ public class RegularLogMonitorCondition implements LogMonitorCondition{
     this.threshold = threshold;
   }
 
-  @Override
-  public MathOperator operator() {
-    return operator;
-  }
-
-  @Override
-  public double threshold() {
-    return threshold;
-  }
-
   public static LogMonitorCondition of(MathOperator mathOperator, double threshold) {
     return new RegularLogMonitorCondition(mathOperator, threshold);
+  }
+
+  @Override
+  public boolean meets(Number input) {
+    return operator.matches(input.doubleValue(), threshold);
   }
 }

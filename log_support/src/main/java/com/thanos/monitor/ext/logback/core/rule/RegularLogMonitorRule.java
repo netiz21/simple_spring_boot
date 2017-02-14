@@ -10,7 +10,7 @@ import com.thanos.monitor.ext.logback.core.targ.RegularLogMonitorTarget;
 import com.thanos.monitor.ext.logback.core.trigger.AlertType;
 import com.thanos.monitor.ext.logback.core.trigger.LogMonitorTrigger;
 import com.thanos.monitor.ext.logback.core.trigger.RegularMultiLogMonitorTrigger;
-import com.thanos.monitor.ext.logback.util.CollectionUtils;
+import com.thanos.monitor.ext.logback.util.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class RegularLogMonitorRule implements LogMonitorRule {
     monitorCondition = generateCondition(expr.getMathOperator(), expr.getThreshold());
 
     // generate monitor trigger
-    if (CollectionUtils.isEmpty(alertType)) {
+    if (CollectionUtil.isEmpty(alertType)) {
       alertType = new ArrayList<String>();
       alertType.add(AlertType.LOG.getType());
     }
@@ -101,10 +101,10 @@ public class RegularLogMonitorRule implements LogMonitorRule {
     }
 
     ThresholdExpression expression = new ThresholdExpression();
-    expression.setTimeCount(Integer.valueOf(matcher.group(1)));
+    expression.setTimeCount(Integer.parseInt(matcher.group(1)));
     expression.setTimeUnit(SupportedTimeUnit.of(matcher.group(2)).toTimeUnit());
     expression.setMathOperator(MathOperator.of(matcher.group(3)));
-    expression.setThreshold(Integer.valueOf(matcher.group(4)));
+    expression.setThreshold(Integer.parseInt(matcher.group(4)));
     return expression;
   }
 

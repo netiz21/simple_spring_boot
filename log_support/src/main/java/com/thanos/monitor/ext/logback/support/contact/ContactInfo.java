@@ -7,7 +7,7 @@ package com.thanos.monitor.ext.logback.support.contact;
 public class ContactInfo {
 
   private String name;
-  private Integer phone;
+  private String phone;
 
   public String getName() {
     return name;
@@ -17,11 +17,11 @@ public class ContactInfo {
     this.name = name;
   }
 
-  public Integer getPhone() {
+  public String getPhone() {
     return phone;
   }
 
-  public void setPhone(Integer phone) {
+  public void setPhone(String phone) {
     this.phone = phone;
   }
 }

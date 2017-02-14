@@ -2,7 +2,7 @@ package com.thanos.monitor.ext.logback.support.parser;
 
 import com.thanos.monitor.ext.logback.core.rule.LogMonitorRule;
 import com.thanos.monitor.ext.logback.core.rule.RegularLogMonitorRule;
-import com.thanos.monitor.ext.logback.util.CollectionUtils;
+import com.thanos.monitor.ext.logback.util.CollectionUtil;
 import com.thanos.monitor.ext.logback.util.JsonUtil;
 
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ public class LogMonitorRuleParser {
     monitorRuleStr = escapeBackslashAsRegex(monitorRuleStr);
 
     List<RegularLogMonitorRule> rules = JsonUtil.parseArray(monitorRuleStr, RegularLogMonitorRule.class);
-    if (CollectionUtils.isEmpty(rules)) {
-      return CollectionUtils.emptyList();
+    if (CollectionUtil.isEmpty(rules)) {
+      return CollectionUtil.emptyList();
     }
 
     List<LogMonitorRule> list = new ArrayList<LogMonitorRule>();
