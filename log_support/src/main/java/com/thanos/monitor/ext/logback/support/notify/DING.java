@@ -32,7 +32,6 @@ public final class DING {
   private static final String MSG_TYPE = "text";
   private static final String SECRET = "0f29cb926ce69bb25bc7aca36d2d8f9f";
   private static final String DEFAULT_CHARSET = "utf-8";
-
   private static final String MOBILE_SPLITTER = ",";
 
   private DING() {
