@@ -11,6 +11,7 @@ import com.thanos.monitor.ext.logback.core.trigger.AlertType;
 import com.thanos.monitor.ext.logback.core.trigger.LogMonitorTrigger;
 import com.thanos.monitor.ext.logback.core.trigger.RegularMultiLogMonitorTrigger;
 import com.thanos.monitor.ext.logback.util.CollectionUtil;
+import com.thanos.monitor.ext.logback.util.JsonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,5 +168,10 @@ public class RegularLogMonitorRule implements LogMonitorRule {
 
   public void setIgnoreOrigin(boolean ignoreOrigin) {
     this.ignoreOrigin = ignoreOrigin;
+  }
+
+  @Override
+  public String toString() {
+    return JsonUtil.toJSON(this);
   }
 }

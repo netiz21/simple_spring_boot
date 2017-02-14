@@ -28,6 +28,8 @@ public class IndexController {
 
   @GetMapping("/hello")
   public String index() {
+    String str = "hello, world3";
+    logger.info(str);
     return "Hello, world!";
   }
 

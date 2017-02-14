@@ -65,6 +65,10 @@ public class LogMonitorFilter extends TurboFilter {
 
   @Override
   public FilterReply decide(Marker marker, Logger logger, Level level, String format, Object[] params, Throwable t) {
+    if (!level.isGreaterOrEqual(Level.INFO)) {
+      return FilterReply.NEUTRAL;
+    }
+
     LogEvent logEvent = LogEventFactory.newEvent(logger, level, format, params, t);
 
     FilterReply reply = FilterReply.NEUTRAL;
@@ -83,6 +87,7 @@ public class LogMonitorFilter extends TurboFilter {
   }
 
   private void onHitRule(LogMonitorRule rule) {
+    LOG.info("Hit monitor rule {}", rule);
     for (LogMonitorProcessor processor : monitorProcessors) {
       if (processor.supports(rule)) {
         processor.process(rule);

@@ -2,6 +2,7 @@ package com.thanos.monitor.ext.logback.core.targ;
 
 import com.thanos.monitor.ext.logback.core.event.LogEvent;
 import com.thanos.monitor.ext.logback.util.LogFormatUtil;
+import com.thanos.monitor.ext.logback.util.StringUtil;
 import com.thanos.monitor.ext.logback.util.Throwables;
 
 import java.util.concurrent.TimeUnit;
@@ -70,6 +71,10 @@ public class RegularLogMonitorTarget implements LogMonitorTarget {
 
   private boolean isLogMessageMatch(Pattern pattern, LogEvent event) {
     String msg = LogFormatUtil.doFormat(event.format(), event.params());
+    if (StringUtil.isEmpty(msg)) {
+      return false;
+    }
+
     Matcher m = pattern.matcher(msg);
     return m.find();
   }
@@ -80,6 +85,10 @@ public class RegularLogMonitorTarget implements LogMonitorTarget {
     }
 
     String stackTrace = Throwables.getStackTraceAsString(event.throwable());
+    if (StringUtil.isEmpty(stackTrace)) {
+      return false;
+    }
+
     Matcher m = pattern.matcher(stackTrace);
     return m.find();
   }
