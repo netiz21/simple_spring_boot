@@ -6,14 +6,16 @@ package com.thanos.springboot.agent;
  */
 public class MyUser {
 
-  private boolean isFemale = false;
-  private boolean isFemale2 = false;
-  private boolean isFemale3 = false;
-  private boolean isFemale4 = false;
-//  private boolean isFemale5 = false;
-//  private boolean isFemale6 = false;
-//  private boolean isFemale7 = false;
-//  private boolean isFemale8 = false;
+  private Object obj = new Object();
+//  private byte j;
+
+  public Object getObj() {
+    return obj;
+  }
+
+  public void setObj(Object obj) {
+    this.obj = obj;
+  }
 
   public String getName() {
     return "foo";

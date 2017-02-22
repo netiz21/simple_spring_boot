@@ -22,13 +22,14 @@ public class MyMainClass {
    */
   public static void main(String[] args) {
     logger.info("main method invoked with args: {}", Arrays.asList(args));
-    logger.info("String size is {}", CustomJavaAgent.sizeOf("Hello, world!"));
-    logger.info("MyUser instance size is {}", CustomJavaAgent.sizeOf(new MyUser()));
 
     int i = 5;
     Integer j = 3;
     logger.info("int i size is {}", CustomJavaAgent.sizeOf(i));
     logger.info("Integer j size is {}", CustomJavaAgent.sizeOf(j));
+
+    long l = 5;
+    logger.info("long l size is {}", CustomJavaAgent.sizeOf(l));
 
     int[] array1 = new int[1];
     logger.info("int array with length {} consume size is {}", array1.length,
@@ -54,6 +55,9 @@ public class MyMainClass {
 
     Object o = new Object();
     logger.info("new object instance size is {}", CustomJavaAgent.sizeOf(o));
+
+    MyUser user = new MyUser();
+    logger.info("new MyUser instance size is {}", CustomJavaAgent.sizeOf(user));
   }
 
 }
