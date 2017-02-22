@@ -6,6 +6,8 @@ package com.thanos.springboot.agent;
  */
 public class MyUser {
 
+  // test object reference size
+  // when used Compressed Pointer, the size is 4 bytes
   private Object obj = new Object();
 //  private byte j;
 
