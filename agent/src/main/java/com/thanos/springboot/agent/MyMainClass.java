@@ -23,15 +23,13 @@ public class MyMainClass {
   public static void main(String[] args) {
     logger.info("main method invoked with args: {}", Arrays.asList(args));
 
-    int i = 5;
     Integer j = 3;
-    logger.info("int i size is {}", CustomJavaAgent.sizeOf(i));
     logger.info("Integer j size is {}", CustomJavaAgent.sizeOf(j));
 
-    long l = 5L;
-    double d = 3.0;
-    logger.info("long l size is {}", CustomJavaAgent.sizeOf(l));
-    logger.info("double d size is {}", CustomJavaAgent.sizeOf(d));
+    Long l = 5L;
+    Double d = 3.0;
+    logger.info("Long l size is {}", CustomJavaAgent.sizeOf(l));
+    logger.info("Double d size is {}", CustomJavaAgent.sizeOf(d));
 
     int[] array1 = new int[1];
     logger.info("int array with length {} consume size is {}", array1.length,
