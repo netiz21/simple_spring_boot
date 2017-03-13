@@ -3,6 +3,7 @@ package com.thanos.springboot.web;
 import com.thanos.springboot.bo.User;
 import com.thanos.springboot.common.StandardResponse;
 import com.thanos.springboot.service.IUserService;
+import com.thanos.springboot.vo.UserQueryReqVo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,12 @@ public class UserController {
   @GetMapping("/user/{id}")
   public StandardResponse<User> user(@PathVariable long id) {
     User user = userService.findById(id);
+    return StandardResponse.ok(user);
+  }
+
+  @GetMapping("/user/get")
+  public StandardResponse<User> getUser(UserQueryReqVo reqVo) {
+    User user = userService.findById(reqVo.getId());
     return StandardResponse.ok(user);
   }
 
