@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * @author peiheng.zph created on 16/12/5 下午11:20
+ * @author solarknight created on 16/12/5 下午11:20
  * @version 1.0
  */
 public class StandardResponse<T> {

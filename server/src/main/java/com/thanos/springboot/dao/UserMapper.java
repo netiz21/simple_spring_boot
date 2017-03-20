@@ -17,4 +17,6 @@ public interface UserMapper {
   User findById(@Param("id") Long id);
 
   List<User> findAll();
+
+  int insert(User record);
 }

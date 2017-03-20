@@ -1,12 +1,12 @@
 package com.thanos.springboot.common;
 
 /**
- * @author peiheng.zph created on 16/12/6 上午11:57
+ * @author solarknight created on 16/12/6 上午11:57
  * @version 1.0
  */
 public enum ResponseEnum {
 
-  SUCCESS(0, ""), INVALID_PARAM(1001, "参数错误");
+  SUCCESS(0, ""), INVALID_PARAM(1001, "Invalid param"), INTERNAL_ERROR(1111, "Internal error");
 
   ResponseEnum(int status, String msg) {
     this.status = status;

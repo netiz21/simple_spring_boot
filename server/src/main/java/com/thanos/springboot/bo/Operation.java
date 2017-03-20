@@ -80,4 +80,17 @@ public class Operation {
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
+
+  public static class OperationBuilder {
+    public static Operation build(String classStr, String methodStr, String paramStr, String resultStr, String throwableStr) {
+      Operation operation = new Operation();
+      operation.setTargetClass(classStr);
+      operation.setTargetMethod(methodStr);
+      operation.setMethodParam(paramStr);
+      operation.setMethodReturn(resultStr);
+      operation.setMethodThrow(throwableStr);
+      operation.setCreateTime(new Date());
+      return operation;
+    }
+  }
 }

@@ -9,6 +9,10 @@
     <result column="descp" property="descp" />
   </resultMap>
 
+  <sql id="Base_Column_List" >
+    id, name, sex, descp
+  </sql>
+
   <select id="findById" resultMap="UserResultMap">
     select id, name, sex, descp
     from user
@@ -19,5 +23,10 @@
     select id, name, sex, descp
     from user
   </select>
+
+  <insert id="insert" parameterType="com.thanos.springboot.bo.Operation" >
+    insert into user (name, sex, descp)
+    values (#{name}, #{sex}, #{descp})
+  </insert>
 
 </mapper>

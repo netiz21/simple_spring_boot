@@ -1,6 +1,7 @@
 package com.thanos.springboot.service.impl;
 
 import com.thanos.springboot.bo.User;
+import com.thanos.springboot.common.oplog.OpLog;
 import com.thanos.springboot.dao.UserMapper;
 import com.thanos.springboot.service.IUserService;
 
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author peiheng.zph created on 16/12/10 上午11:20
+ * @author solarknight created on 16/12/10 上午11:20
  * @version 1.0
  */
 @Service
@@ -27,5 +28,14 @@ public class UserService implements IUserService {
   @Override
   public List<User> findAll() {
     return userMapper.findAll();
+  }
+
+  @OpLog
+  @Override
+  public boolean createUser(User user) {
+    if (user == null) {
+      return false;
+    }
+    return userMapper.insert(user) > 0;
   }
 }
