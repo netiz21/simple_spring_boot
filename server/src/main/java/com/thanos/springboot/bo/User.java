@@ -1,5 +1,8 @@
 package com.thanos.springboot.bo;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * @author solarknight created on 2016/11/21 0:12
  * @version 1.0
@@ -41,5 +44,10 @@ public class User {
 
   public void setDescp(String descp) {
     this.descp = descp;
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 }

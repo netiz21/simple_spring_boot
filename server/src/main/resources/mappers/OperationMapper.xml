@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.thanos.springboot.dao.OperationMapper" >
+  <resultMap id="BaseResultMap" type="com.thanos.springboot.bo.Operation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="target_class" property="targetClass" jdbcType="VARCHAR" />
+    <result column="target_method" property="targetMethod" jdbcType="VARCHAR" />
+    <result column="method_param" property="methodParam" jdbcType="VARCHAR" />
+    <result column="method_return" property="methodReturn" jdbcType="VARCHAR" />
+    <result column="method_throw" property="methodThrow" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, target_class, target_method, method_param, method_return, method_throw, create_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from operation
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="com.thanos.springboot.bo.Operation" >
+    insert into operation (id, target_class, target_method, 
+      method_param, method_return, method_throw, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{targetClass,jdbcType=VARCHAR}, #{targetMethod,jdbcType=VARCHAR}, 
+      #{methodParam,jdbcType=VARCHAR}, #{methodReturn,jdbcType=VARCHAR}, #{methodThrow,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.thanos.springboot.bo.Operation" >
+    insert into operation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="targetClass != null" >
+        target_class,
+      </if>
+      <if test="targetMethod != null" >
+        target_method,
+      </if>
+      <if test="methodParam != null" >
+        method_param,
+      </if>
+      <if test="methodReturn != null" >
+        method_return,
+      </if>
+      <if test="methodThrow != null" >
+        method_throw,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="targetClass != null" >
+        #{targetClass,jdbcType=VARCHAR},
+      </if>
+      <if test="targetMethod != null" >
+        #{targetMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="methodParam != null" >
+        #{methodParam,jdbcType=VARCHAR},
+      </if>
+      <if test="methodReturn != null" >
+        #{methodReturn,jdbcType=VARCHAR},
+      </if>
+      <if test="methodThrow != null" >
+        #{methodThrow,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.thanos.springboot.bo.Operation" >
+    update operation
+    <set >
+      <if test="targetClass != null" >
+        target_class = #{targetClass,jdbcType=VARCHAR},
+      </if>
+      <if test="targetMethod != null" >
+        target_method = #{targetMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="methodParam != null" >
+        method_param = #{methodParam,jdbcType=VARCHAR},
+      </if>
+      <if test="methodReturn != null" >
+        method_return = #{methodReturn,jdbcType=VARCHAR},
+      </if>
+      <if test="methodThrow != null" >
+        method_throw = #{methodThrow,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.thanos.springboot.bo.Operation" >
+    update operation
+    set target_class = #{targetClass,jdbcType=VARCHAR},
+      target_method = #{targetMethod,jdbcType=VARCHAR},
+      method_param = #{methodParam,jdbcType=VARCHAR},
+      method_return = #{methodReturn,jdbcType=VARCHAR},
+      method_throw = #{methodThrow,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
