@@ -19,5 +19,6 @@
     <module>parent</module>
     <module>btrace-script</module>
     <module>common</module>
+    <module>agent</module>
   </modules>
 </project>
