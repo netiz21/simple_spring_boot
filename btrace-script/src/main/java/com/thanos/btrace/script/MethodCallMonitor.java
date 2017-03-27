@@ -13,6 +13,7 @@ import com.sun.btrace.annotations.Where;
 import static com.sun.btrace.BTraceUtils.jstack;
 import static com.sun.btrace.BTraceUtils.print;
 import static com.sun.btrace.BTraceUtils.println;
+import static com.sun.btrace.BTraceUtils.timeMillis;
 
 /**
  * @author peiheng.zph created on 16/12/15 上午10:15
@@ -26,6 +27,7 @@ public class MethodCallMonitor {
       location = @Location(value = Kind.CALL, clazz = "/.*/", method = "/.*/", where = Where.AFTER))
   public static void onMonitor(@ProbeClassName String probClass, @TargetInstance Object instance,
                                @TargetMethodOrField String method, @Duration long duration) {
+    print(timeMillis());
     print("invoke " + probClass);
     jstack();
     print(" " + instance + "#" + method);

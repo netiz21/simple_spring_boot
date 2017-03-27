@@ -9,7 +9,7 @@ import com.sun.btrace.annotations.ProbeMethodName;
 
 import static com.sun.btrace.BTraceUtils.print;
 import static com.sun.btrace.BTraceUtils.println;
-import static com.sun.btrace.BTraceUtils.timeNanos;
+import static com.sun.btrace.BTraceUtils.timeMillis;
 
 /**
  * @author peiheng.zph created on 16/12/14 下午2:21
@@ -24,7 +24,7 @@ public class MethodLineMonitor {
   public static void onMonitor(@ProbeClassName String clazz,
                                @ProbeMethodName String method,
                                int line) {
-    print(timeNanos());
+    print(timeMillis());
     print("current position " + clazz);
     print("#" + method);
     print(" : " + line);
