@@ -73,11 +73,6 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-
-    <dependency>
-      <groupId>com.thanos.web</groupId>
-      <artifactId>log_support</artifactId>
-    </dependency>
   </dependencies>
 
   <build>

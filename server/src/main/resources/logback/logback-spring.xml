@@ -2,15 +2,6 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
   <property name="log.dir" value="logs"/>
 
-  <!-- import filter rule -->
-  <property resource="logback/monitor/rule.properties" />
-
-  <!-- custom filter filter -->
-  <turboFilter class="com.thanos.monitor.ext.logback.filter.LogMonitorFilter">
-    <monitorRuleStr>${monitorRule}</monitorRuleStr>
-    <monitorContactStr>${monitorContact}</monitorContactStr>
-  </turboFilter>
-
   <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
       <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} %-5L: %m%n</pattern>
