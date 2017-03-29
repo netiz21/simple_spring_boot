@@ -17,6 +17,7 @@
 
   <properties>
     <log.support.version>1.0.0-SNAPSHOT</log.support.version>
+    <protobuf.version>2.5.0</protobuf.version>
   </properties>
 
   <dependencyManagement>
@@ -91,6 +92,12 @@
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjrt</artifactId>
         <version>1.8.7</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-java</artifactId>
+        <version>${protobuf.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

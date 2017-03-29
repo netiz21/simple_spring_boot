@@ -20,5 +20,6 @@
     <module>btrace-script</module>
     <module>common</module>
     <module>agent</module>
+    <module>proto</module>
   </modules>
 </project>
