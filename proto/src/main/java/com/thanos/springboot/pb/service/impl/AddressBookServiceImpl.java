@@ -3,20 +3,44 @@ package com.thanos.springboot.pb.service.impl;
 import com.thanos.springboot.pb.proto.AddressBookProtos.Person;
 import com.thanos.springboot.pb.service.AddressBookService;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 /**
  * @author peiheng.zph created on 17/3/30 下午8:43
  * @version 1.0
  */
 public class AddressBookServiceImpl implements AddressBookService {
 
+
   @Override
-  public Person buildPersonDemo() {
+  public void tryWrite() {
     Person john = Person.newBuilder()
-        .setId(1234)
-        .setName("John Doe")
-        .setEmail("jode@example.com")
-        .addPhones(Person.PhoneNumber.newBuilder()
-            .setNumber("555-4321").build()).build();
-    return john;
+        .setName("John")
+        .setSex(Person.Sex.NEUTRAL)
+        .build();
+    try {
+      FileOutputStream fileOutputStream = new FileOutputStream("person.txt");
+      john.writeTo(fileOutputStream);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void tryRead() {
+    try {
+      Person person = Person.parseFrom(new FileInputStream("person.txt"));
+      System.out.println(person);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void main(String[] args) {
+    AddressBookService addressBookService = new AddressBookServiceImpl();
+//    addressBookService.tryWrite();
+    addressBookService.tryRead();
   }
 }
