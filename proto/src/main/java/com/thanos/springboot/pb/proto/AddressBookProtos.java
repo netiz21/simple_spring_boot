@@ -26,13 +26,21 @@ public final class AddressBookProtos {
     com.google.protobuf.ByteString
         getNameBytes();
 
-    // required .Person.Sex sex = 2;
+    // optional .Person.Sex sex = 2;
     /**
-     * <code>required .Person.Sex sex = 2;</code>
+     * <code>optional .Person.Sex sex = 2;</code>
+     *
+     * <pre>
+     *  In order to be backwards extensible, enum must be optional
+     * </pre>
      */
     boolean hasSex();
     /**
-     * <code>required .Person.Sex sex = 2;</code>
+     * <code>optional .Person.Sex sex = 2;</code>
+     *
+     * <pre>
+     *  In order to be backwards extensible, enum must be optional
+     * </pre>
      */
     com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex getSex();
   }
@@ -148,40 +156,48 @@ public final class AddressBookProtos {
     public enum Sex
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
+       * <code>UNKNOWN = 255;</code>
+       */
+      UNKNOWN(0, 255),
+      /**
        * <code>MAN = 0;</code>
        */
-      MAN(0, 0),
+      MAN(1, 0),
       /**
        * <code>FEMALE = 1;</code>
+       *
+       * <pre>
+       *        NEUTRAL = 2;
+       * </pre>
        */
-      FEMALE(1, 1),
-      /**
-       * <code>NEUTRAL = 3;</code>
-       */
-      NEUTRAL(2, 3),
+      FEMALE(2, 1),
       ;
 
+      /**
+       * <code>UNKNOWN = 255;</code>
+       */
+      public static final int UNKNOWN_VALUE = 255;
       /**
        * <code>MAN = 0;</code>
        */
       public static final int MAN_VALUE = 0;
       /**
        * <code>FEMALE = 1;</code>
+       *
+       * <pre>
+       *        NEUTRAL = 2;
+       * </pre>
        */
       public static final int FEMALE_VALUE = 1;
-      /**
-       * <code>NEUTRAL = 3;</code>
-       */
-      public static final int NEUTRAL_VALUE = 3;
 
 
       public final int getNumber() { return value; }
 
       public static Sex valueOf(int value) {
         switch (value) {
+          case 255: return UNKNOWN;
           case 0: return MAN;
           case 1: return FEMALE;
-          case 3: return NEUTRAL;
           default: return null;
         }
       }
@@ -277,17 +293,25 @@ public final class AddressBookProtos {
       }
     }
 
-    // required .Person.Sex sex = 2;
+    // optional .Person.Sex sex = 2;
     public static final int SEX_FIELD_NUMBER = 2;
     private com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex sex_;
     /**
-     * <code>required .Person.Sex sex = 2;</code>
+     * <code>optional .Person.Sex sex = 2;</code>
+     *
+     * <pre>
+     *  In order to be backwards extensible, enum must be optional
+     * </pre>
      */
     public boolean hasSex() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required .Person.Sex sex = 2;</code>
+     * <code>optional .Person.Sex sex = 2;</code>
+     *
+     * <pre>
+     *  In order to be backwards extensible, enum must be optional
+     * </pre>
      */
     public com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex getSex() {
       return sex_;
@@ -295,7 +319,7 @@ public final class AddressBookProtos {
 
     private void initFields() {
       name_ = "";
-      sex_ = com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex.MAN;
+      sex_ = com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex.UNKNOWN;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -303,10 +327,6 @@ public final class AddressBookProtos {
       if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasName()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasSex()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -458,7 +478,7 @@ public final class AddressBookProtos {
         super.clear();
         name_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        sex_ = com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex.MAN;
+        sex_ = com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex.UNKNOWN;
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
@@ -526,10 +546,6 @@ public final class AddressBookProtos {
 
       public final boolean isInitialized() {
         if (!hasName()) {
-          
-          return false;
-        }
-        if (!hasSex()) {
           
           return false;
         }
@@ -629,22 +645,34 @@ public final class AddressBookProtos {
         return this;
       }
 
-      // required .Person.Sex sex = 2;
-      private com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex sex_ = com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex.MAN;
+      // optional .Person.Sex sex = 2;
+      private com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex sex_ = com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex.UNKNOWN;
       /**
-       * <code>required .Person.Sex sex = 2;</code>
+       * <code>optional .Person.Sex sex = 2;</code>
+       *
+       * <pre>
+       *  In order to be backwards extensible, enum must be optional
+       * </pre>
        */
       public boolean hasSex() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required .Person.Sex sex = 2;</code>
+       * <code>optional .Person.Sex sex = 2;</code>
+       *
+       * <pre>
+       *  In order to be backwards extensible, enum must be optional
+       * </pre>
        */
       public com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex getSex() {
         return sex_;
       }
       /**
-       * <code>required .Person.Sex sex = 2;</code>
+       * <code>optional .Person.Sex sex = 2;</code>
+       *
+       * <pre>
+       *  In order to be backwards extensible, enum must be optional
+       * </pre>
        */
       public Builder setSex(com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex value) {
         if (value == null) {
@@ -656,11 +684,15 @@ public final class AddressBookProtos {
         return this;
       }
       /**
-       * <code>required .Person.Sex sex = 2;</code>
+       * <code>optional .Person.Sex sex = 2;</code>
+       *
+       * <pre>
+       *  In order to be backwards extensible, enum must be optional
+       * </pre>
        */
       public Builder clearSex() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        sex_ = com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex.MAN;
+        sex_ = com.thanos.springboot.pb.proto.AddressBookProtos.Person.Sex.UNKNOWN;
         onChanged();
         return this;
       }
@@ -1382,11 +1414,11 @@ public final class AddressBookProtos {
   static {
     java.lang.String[] descriptorData = {
       "\n0com/thanos/springboot/pb/proto/address" +
-      "book.proto\"Y\n\006Person\022\014\n\004name\030\001 \002(\t\022\030\n\003se" +
-      "x\030\002 \002(\0162\013.Person.Sex\"\'\n\003Sex\022\007\n\003MAN\020\000\022\n\n\006" +
-      "FEMALE\020\001\022\013\n\007NEUTRAL\020\003\"&\n\013AddressBook\022\027\n\006" +
-      "people\030\001 \003(\0132\007.PersonB6\n\036com.thanos.spri" +
-      "ngboot.pb.protoB\021AddressBookProtos\210\001\001"
+      "book.proto\"Z\n\006Person\022\014\n\004name\030\001 \002(\t\022\030\n\003se" +
+      "x\030\002 \001(\0162\013.Person.Sex\"(\n\003Sex\022\014\n\007UNKNOWN\020\377" +
+      "\001\022\007\n\003MAN\020\000\022\n\n\006FEMALE\020\001\"&\n\013AddressBook\022\027\n" +
+      "\006people\030\001 \003(\0132\007.PersonB6\n\036com.thanos.spr" +
+      "ingboot.pb.protoB\021AddressBookProtos\210\001\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

@@ -4,7 +4,6 @@ import com.thanos.springboot.pb.proto.AddressBookProtos.Person;
 import com.thanos.springboot.pb.service.AddressBookService;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 /**
@@ -18,7 +17,7 @@ public class AddressBookServiceImpl implements AddressBookService {
   public void tryWrite() {
     Person john = Person.newBuilder()
         .setName("John")
-        .setSex(Person.Sex.NEUTRAL)
+//        .setSex(Person.Sex.NEUTRAL)
         .build();
     try {
       FileOutputStream fileOutputStream = new FileOutputStream("person.txt");
@@ -33,6 +32,7 @@ public class AddressBookServiceImpl implements AddressBookService {
     try {
       Person person = Person.parseFrom(new FileInputStream("person.txt"));
       System.out.println(person);
+      System.out.println(person.getSex());
     } catch (Exception e) {
       e.printStackTrace();
     }
