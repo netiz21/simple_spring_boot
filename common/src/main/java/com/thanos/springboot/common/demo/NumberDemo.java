@@ -29,5 +29,8 @@ public class NumberDemo {
 
         // convert to string "64.0" during compile time
         System.out.println(1 + 2 + 3 + "4.0");
+
+        // convert number to binary format
+        System.out.println(Integer.toBinaryString(11));
     }
 }
