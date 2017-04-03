@@ -83,6 +83,11 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-aspects</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-actor_2.11</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
