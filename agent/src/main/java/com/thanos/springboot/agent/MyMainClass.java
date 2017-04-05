@@ -58,6 +58,14 @@ public class MyMainClass {
 
     MyUser user = new MyUser();
     logger.info("new MyUser instance size is {}", CustomJavaAgent.sizeOf(user));
+
+    // 64bit jvm with Coops: 12 [object header] + 4 [pointer to char array] + 4 [int hash value] + 4 [padding] = 24
+    String s = "hello";
+    logger.info("String '{}' size is {}", s, CustomJavaAgent.sizeOf(s));
+
+    // 64bit jvm with Coops: 16 [array header] + 5 * 2 [char] + 6 [padding] = 32
+    char[] chars = {'h', 'e', 'l', 'l', 'o'};
+    logger.info("Char array '{}' size is {}", chars, CustomJavaAgent.sizeOf(chars));
   }
 
 }
