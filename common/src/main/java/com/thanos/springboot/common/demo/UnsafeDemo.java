@@ -13,6 +13,7 @@ import java.util.HashSet;
  * @version 1.0
  */
 public class UnsafeDemo {
+  private static final boolean is64bit = true; // auto detect if possible.
 
   //    private Unsafe unsafe = Unsafe.getUnsafe();
   private static Unsafe unsafe;
@@ -85,6 +86,32 @@ public class UnsafeDemo {
     return ((maxSize / 8) + 1) * 8;   // padding
   }
 
+  public static void printAddresses(String label, Object... objects) {
+    System.out.print(label + ": 0x");
+    long last = 0;
+    int offset = unsafe.arrayBaseOffset(objects.getClass());
+    int scale = unsafe.arrayIndexScale(objects.getClass());
+    switch (scale) {
+      case 4:
+        long factor = is64bit ? 8 : 1;
+        final long i1 = (unsafe.getInt(objects, offset) & 0xFFFFFFFFL) * factor;
+        System.out.print(Long.toHexString(i1));
+        last = i1;
+        for (int i = 1; i < objects.length; i++) {
+          final long i2 = (unsafe.getInt(objects, offset + i * 4) & 0xFFFFFFFFL) * factor;
+          if (i2 > last)
+            System.out.print(", +" + Long.toHexString(i2 - last));
+          else
+            System.out.print(", -" + Long.toHexString( last - i2));
+          last = i2;
+        }
+        break;
+      case 8:
+        throw new AssertionError("Not supported");
+    }
+    System.out.println();
+  }
+
   public static void main(String[] args) {
     UnsafeDemo demo = new UnsafeDemo();
     System.out.println(demo.addressSize());
@@ -126,13 +153,12 @@ public class UnsafeDemo {
 
     System.out.println(sizeOf(guard[0]));
 
-    int i = 5;
-    Integer j = 3;
-    System.out.println("int i size is " + sizeOf(i));
-    System.out.println("Integer j size is "+ sizeOf(j));
-
-    Object o = new Object();
-    System.out.println("new object instance size is "+ sizeOf(o));
+    Object myObj = new Object();
+    Object myObj2 = new Object();
+    System.out.println(myObj);
+    printAddresses("My obj", myObj);
+    System.out.println(myObj2);
+    printAddresses("My obj2", myObj2);
 
     System.out.println("==========================================");
   }
