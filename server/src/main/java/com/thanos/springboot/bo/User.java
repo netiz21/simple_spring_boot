@@ -3,15 +3,21 @@ package com.thanos.springboot.bo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author solarknight created on 2016/11/21 0:12
  * @version 1.0
  */
 public class User {
 
+  @ApiModelProperty(value = "database user id", required = true)
   private Long id;
+  @ApiModelProperty(value = "user name", required = true)
   private String name;
+  @ApiModelProperty(value = "user sex, 0 female, 1 male", required = true)
   private Integer sex;
+  @ApiModelProperty("user description")
   private String descp;
 
   public Long getId() {

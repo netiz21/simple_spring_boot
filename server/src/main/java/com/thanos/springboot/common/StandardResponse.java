@@ -3,12 +3,15 @@ package com.thanos.springboot.common;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author solarknight created on 16/12/5 下午11:20
  * @version 1.0
  */
 public class StandardResponse<T> {
 
+  @ApiModelProperty(value = "status", required = true)
   private int status;
   private String errorMsg;
   private T data;

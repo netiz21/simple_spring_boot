@@ -10,21 +10,29 @@ import com.thanos.springboot.vo.UserQueryReqVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author solarknight created on 16/12/10 上午11:23
  * @version 1.0
  */
 @RestController
+@RequestMapping("/user")
+@Api(value = "user controller", description = "CRUD operation about user")
 public class UserController {
 
   private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -32,19 +40,23 @@ public class UserController {
   @Autowired
   private IUserService userService;
 
-  @GetMapping("/user/{id}")
+  @ApiOperation(value = "View user by id")
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public StandardResponse<User> user(@PathVariable long id) {
     User user = userService.findById(id);
     return StandardResponse.ok(user);
   }
 
-  @GetMapping("/user/get")
-  public StandardResponse<User> getUser(UserQueryReqVo reqVo) {
+  @ApiOperation(value = "View user by id and other condition")
+  @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
+  public StandardResponse<User> getUser(@Valid @ModelAttribute UserQueryReqVo reqVo) {
+    logger.info("Query param {}", reqVo);
     User user = userService.findById(reqVo.getId());
     return StandardResponse.ok(user);
   }
 
-  @GetMapping("/users")
+  @ApiOperation("Get all users")
+  @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
   public StandardResponse<List<User>> users() {
     long begin = System.currentTimeMillis();
     List<User> users = userService.findAll();
@@ -53,7 +65,8 @@ public class UserController {
     return StandardResponse.ok(users);
   }
 
-  @PostMapping("/user")
+  @ApiOperation("Add new user")
+  @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
   public StandardResponse<Void> createUser(@Valid @RequestBody UserCreateReqVo reqVo) {
     User user = UserCreateReqVo.UserCreateReqVoConverter.convert(reqVo);
     boolean success = userService.createUser(user);

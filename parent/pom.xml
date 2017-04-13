@@ -18,6 +18,7 @@
   <properties>
     <log.support.version>1.0.0-SNAPSHOT</log.support.version>
     <protobuf.version>2.5.0</protobuf.version>
+    <swagger.version>2.6.1</swagger.version>
   </properties>
 
   <dependencyManagement>
@@ -77,12 +78,6 @@
       </dependency>
 
       <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.4.4</version>
-      </dependency>
-
-      <dependency>
         <groupId>commons-httpclient</groupId>
         <artifactId>commons-httpclient</artifactId>
         <version>3.1</version>
@@ -117,6 +112,26 @@
         <artifactId>jmh-generator-annprocess</artifactId>
         <version>1.18</version>
       </dependency>
+
+      <!-- swagger begin -->
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger2</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger-ui</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-bean-validators</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+      <!-- swagger end -->
     </dependencies>
   </dependencyManagement>
 
