@@ -47,7 +47,7 @@ public class SwaggerConfig {
    * Currently only disable when in prod env
    */
   private boolean enableByEnv() {
-    String profile = System.getenv(PROPERTY_PROFILE);
+    String profile = System.getProperty(PROPERTY_PROFILE);
     boolean enable = StringUtils.isEmpty(profile) || !isProdEnv(profile);
 
     logger.info("Current profile is {}, set spring fox enabled {}", profile, enable);
