@@ -60,7 +60,7 @@ public class BiasedLockingBenchmark {
   @Benchmark
   @Threads(2)
   public void withIdHashContended(Blackhole bh) {
-    synchronized (withoutIdHash) {
+    synchronized (withIdHash) {
       bh.consume(unsafeCounter++);
     }
   }
