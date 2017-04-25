@@ -16,7 +16,6 @@
   </parent>
 
   <properties>
-    <log.support.version>1.0.0-SNAPSHOT</log.support.version>
     <protobuf.version>2.5.0</protobuf.version>
     <swagger.version>2.6.1</swagger.version>
   </properties>
