@@ -16,7 +16,7 @@ import java.util.Date;
 @Service
 public class OperationService implements IOperationService {
 
-  @Autowired
+//  @Autowired
   private OperationMapper operationMapper;
 
   @Override

@@ -3,6 +3,7 @@ package com.thanos.springboot.service.impl;
 import com.thanos.springboot.bo.User;
 import com.thanos.springboot.common.oplog.OpLog;
 import com.thanos.springboot.dao.UserMapper;
+import com.thanos.springboot.dao.UserRepository;
 import com.thanos.springboot.service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,11 @@ import java.util.List;
 @Service
 public class UserService implements IUserService {
 
-  @Autowired
+//  @Autowired
   private UserMapper userMapper;
+
+  @Autowired
+  private UserRepository userRepository;
 
   @Override
   public User findById(long id) {

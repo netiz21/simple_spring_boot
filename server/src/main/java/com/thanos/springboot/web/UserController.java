@@ -30,8 +30,8 @@ import io.swagger.annotations.ApiOperation;
  * @author solarknight created on 16/12/10 上午11:23
  * @version 1.0
  */
-@RestController
-@RequestMapping("/user")
+//@RestController
+//@RequestMapping("/user")
 @Api(value = "user controller", description = "CRUD operation about user")
 public class UserController {
 
