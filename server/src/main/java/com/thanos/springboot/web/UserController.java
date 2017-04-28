@@ -1,7 +1,6 @@
 package com.thanos.springboot.web;
 
 import com.thanos.springboot.bo.User;
-import com.thanos.springboot.common.ResponseEnum;
 import com.thanos.springboot.common.StandardResponse;
 import com.thanos.springboot.service.IUserService;
 import com.thanos.springboot.vo.UserCreateReqVo;
@@ -30,8 +29,8 @@ import io.swagger.annotations.ApiOperation;
  * @author solarknight created on 16/12/10 上午11:23
  * @version 1.0
  */
-//@RestController
-//@RequestMapping("/user")
+@RestController
+@RequestMapping("/user")
 @Api(value = "user controller", description = "CRUD operation about user")
 public class UserController {
 
@@ -69,10 +68,7 @@ public class UserController {
   @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
   public StandardResponse<Void> createUser(@Valid @RequestBody UserCreateReqVo reqVo) {
     User user = UserCreateReqVo.UserCreateReqVoConverter.convert(reqVo);
-    boolean success = userService.createUser(user);
-    if (success) {
-      return StandardResponse.ok();
-    }
-    return StandardResponse.error(ResponseEnum.INTERNAL_ERROR);
+    userService.createUser(user);
+    return StandardResponse.ok();
   }
 }

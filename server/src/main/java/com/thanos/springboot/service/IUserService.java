@@ -14,5 +14,5 @@ public interface IUserService {
 
   List<User> findAll();
 
-  boolean createUser(User user);
+  User createUser(User user);
 }
