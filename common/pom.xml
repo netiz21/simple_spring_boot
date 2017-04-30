@@ -59,6 +59,11 @@
       <groupId>org.openjdk.jol</groupId>
       <artifactId>jol-core</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.squareup</groupId>
+      <artifactId>javapoet</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
