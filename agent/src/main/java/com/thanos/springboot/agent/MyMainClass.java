@@ -26,11 +26,39 @@ public class MyMainClass {
     Integer j = 3;
     logger.info("Integer j size is {}", CustomJavaAgent.sizeOf(j));
 
-    Long l = 5L;
     Double d = 3.0;
-    logger.info("Long l size is {}", CustomJavaAgent.sizeOf(l));
     logger.info("Double d size is {}", CustomJavaAgent.sizeOf(d));
 
+    Boolean b = false;
+    logger.info("Boolean b size is {}", CustomJavaAgent.sizeOf(b));
+
+    calculateArraySize();
+    calculateObjectSize();
+    calculateStringSize();
+
+    TimedOperation operation = new TimedOperation();
+    logger.info("incr result {}", operation.incrTimed());
+  }
+
+  private static void calculateObjectSize() {
+    Object o = new Object();
+    logger.info("new object instance size is {}", CustomJavaAgent.sizeOf(o));
+
+    MyUser user = new MyUser();
+    logger.info("new MyUser instance size is {}", CustomJavaAgent.sizeOf(user));
+  }
+
+  private static void calculateStringSize() {
+    // 64bit jvm with Coops: 12 [object header] + 4 [pointer to char array] + 4 [int hash value] + 4 [padding] = 24
+    String s = "hello";
+    logger.info("String '{}' size is {}", s, CustomJavaAgent.sizeOf(s));
+
+    // 64bit jvm with Coops: 16 [array header] + 5 * 2 [char] + 6 [padding] = 32
+    char[] chars = {'h', 'e', 'l', 'l', 'o'};
+    logger.info("Char array '{}' size is {}", chars, CustomJavaAgent.sizeOf(chars));
+  }
+
+  private static void calculateArraySize() {
     int[] array1 = new int[1];
     logger.info("int array with length {} consume size is {}", array1.length,
         CustomJavaAgent.sizeOf(array1));
@@ -49,23 +77,6 @@ public class MyMainClass {
     int[] array8 = new int[8];
     logger.info("int array with length {} consume size is {}", array8.length,
         CustomJavaAgent.sizeOf(array8));
-
-    boolean b = false;
-    logger.info("boolean b size is {}", CustomJavaAgent.sizeOf(b));
-
-    Object o = new Object();
-    logger.info("new object instance size is {}", CustomJavaAgent.sizeOf(o));
-
-    MyUser user = new MyUser();
-    logger.info("new MyUser instance size is {}", CustomJavaAgent.sizeOf(user));
-
-    // 64bit jvm with Coops: 12 [object header] + 4 [pointer to char array] + 4 [int hash value] + 4 [padding] = 24
-    String s = "hello";
-    logger.info("String '{}' size is {}", s, CustomJavaAgent.sizeOf(s));
-
-    // 64bit jvm with Coops: 16 [array header] + 5 * 2 [char] + 6 [padding] = 32
-    char[] chars = {'h', 'e', 'l', 'l', 'o'};
-    logger.info("Char array '{}' size is {}", chars, CustomJavaAgent.sizeOf(chars));
   }
 
 }

@@ -1,5 +1,11 @@
 package com.thanos.springboot.agent;
 
+import net.bytebuddy.agent.builder.AgentBuilder;
+import net.bytebuddy.description.type.TypeDescription;
+import net.bytebuddy.dynamic.DynamicType;
+import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.matcher.ElementMatchers;
+import net.bytebuddy.utility.JavaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,19 +22,23 @@ public class CustomJavaAgent {
 
   /**
    * JVM hook to statically load the javaagent at startup.
-   *
+   * <p>
    * After the Java Virtual Machine (JVM) has initialized, the premain method
    * will be called. Then the real application main method will be called.
    */
   public static void premain(String args, Instrumentation inst) throws Exception {
-    logger.info("premain method invoked with args: {} and inst: {}", args, inst);
+    new AgentBuilder.Default()
+        .type(ElementMatchers.nameEndsWith("Timed"))
+        .transform((builder, type, classLoader, module) ->
+            builder.method(ElementMatchers.any())
+                .intercept(MethodDelegation.to(TimingInterceptor.class))
+        ).installOn(inst);
     instrumentation = inst;
-    instrumentation.addTransformer(new CustomClassFileTransformer());
   }
 
   /**
    * JVM hook to dynamically load javaagent at runtime.
-   *
+   * <p>
    * The agent class may have an agentmain method for use when the agent is
    * started after VM startup.
    */
