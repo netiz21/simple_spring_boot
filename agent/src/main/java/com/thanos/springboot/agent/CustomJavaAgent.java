@@ -1,11 +1,8 @@
 package com.thanos.springboot.agent;
 
 import net.bytebuddy.agent.builder.AgentBuilder;
-import net.bytebuddy.description.type.TypeDescription;
-import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
-import net.bytebuddy.utility.JavaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +25,9 @@ public class CustomJavaAgent {
    */
   public static void premain(String args, Instrumentation inst) throws Exception {
     new AgentBuilder.Default()
-        .type(ElementMatchers.nameEndsWith("Timed"))
+        // debug info
+        // .with(AgentBuilder.Listener.StreamWriting.toSystemOut())
+        .type(ElementMatchers.nameContainsIgnoreCase("timed")) // class name match
         .transform((builder, type, classLoader, module) ->
             builder.method(ElementMatchers.any())
                 .intercept(MethodDelegation.to(TimingInterceptor.class))

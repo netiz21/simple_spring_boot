@@ -16,7 +16,7 @@ public class TimingInterceptor {
   private static final Logger logger = LoggerFactory.getLogger(CustomJavaAgent.class);
 
   @RuntimeType
-  public Object intercept(@Origin Method method,
+  public static Object intercept(@Origin Method method,
                                  @SuperCall Callable<?> callable) throws Exception {
     long start = System.currentTimeMillis();
     try {
