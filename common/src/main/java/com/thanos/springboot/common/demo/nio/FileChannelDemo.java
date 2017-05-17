@@ -14,9 +14,9 @@ import java.nio.charset.StandardCharsets;
 public class FileChannelDemo {
 
   public static void readFile(String fileName) throws IOException {
-    RandomAccessFile aFile = new RandomAccessFile(FileChannelDemo.class.getClassLoader().
-        getResource(fileName).getFile(), "r");
-    FileChannel inChannel = aFile.getChannel();
+    RandomAccessFile raf = new RandomAccessFile(FileChannelDemo.class.getResource("/")
+        .getPath() + fileName, "r");
+    FileChannel inChannel = raf.getChannel();
 
     ByteBuffer buf = ByteBuffer.allocate(256);
 
@@ -31,13 +31,13 @@ public class FileChannelDemo {
       buf.clear();
     }
 
-    aFile.close();
+    raf.close();
   }
 
   public static void repeatFile(String fileName) throws IOException {
-    RandomAccessFile aFile = new RandomAccessFile(FileChannelDemo.class.getClassLoader().
-        getResource(fileName).getFile(), "r");
-    FileChannel inChannel = aFile.getChannel();
+    RandomAccessFile raf = new RandomAccessFile(FileChannelDemo.class.getResource("/")
+        .getPath() + fileName, "r");
+    FileChannel inChannel = raf.getChannel();
 
     ByteBuffer buf = ByteBuffer.allocate(256);
 
@@ -59,26 +59,42 @@ public class FileChannelDemo {
       buf.clear();
     }
 
-    aFile.close();
+    raf.close();
   }
 
-  public static void writeFile(String fileName) throws IOException {
-    RandomAccessFile aFile = new RandomAccessFile(FileChannelDemo.class.getClassLoader().
-        getResource(fileName).getFile(), "rw");
-    FileChannel inChannel = aFile.getChannel();
+  public static void appendFile(String fileName) throws IOException {
+    RandomAccessFile raf = new RandomAccessFile(FileChannelDemo.class.getResource("/")
+        .getPath() + fileName, "rw");
+    // operation for append
+    raf.seek(raf.length());
 
-    CharBuffer buf = CharBuffer.wrap("Hello world");
-    inChannel.write(StandardCharsets.UTF_8.encode(buf));
+    FileChannel inChannel = raf.getChannel();
 
-    aFile.close();
+    CharBuffer buf = CharBuffer.wrap("\nHello");
+    CharBuffer buf2 = CharBuffer.wrap(" world");
+    ByteBuffer[] array = {StandardCharsets.UTF_8.encode(buf), StandardCharsets.UTF_8.encode(buf2)};
+    inChannel.write(array);
+
+    raf.close();
+  }
+
+  public static void mirrorFile(String originFile, String mirrorFile) throws IOException {
+    RandomAccessFile fromFile = new RandomAccessFile(FileChannelDemo.class.getResource("/")
+        .getPath() + originFile, "r");
+    RandomAccessFile toFile = new RandomAccessFile(FileChannelDemo.class.getResource("/")
+        .getPath() + mirrorFile, "rw");
+
+    FileChannel fromChannel = fromFile.getChannel(), toChannel = toFile.getChannel();
+    toChannel.transferFrom(fromChannel, 0, fromChannel.size());
   }
 
   public static void main(String[] args) {
     try {
 //      readFile("lesson.txt");
-      repeatFile("lesson.txt");
-//      writeFile("lesson.txt");
-    } catch (IOException e) {
+//      repeatFile("lesson.txt");
+//      appendFile("lesson.txt");
+      mirrorFile("lesson.txt", "mirror.txt");
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
