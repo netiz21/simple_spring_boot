@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -13,6 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  */
 public class ServerSocketChannelDemo {
+  private static final int PACKET_HEADER_LENGTH = 4;
 
   public static void openSocket() throws IOException, InterruptedException {
     ServerSocketChannel serverChannel = ServerSocketChannel.open();
@@ -26,22 +29,53 @@ public class ServerSocketChannelDemo {
         continue;
       }
 
-      System.out.println("Accept connect channel");
-      ByteBuffer buffer = ByteBuffer.allocate(64);
+      new Thread(() -> {
+        try {
+          handleChannel(socketChannel);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }).start();
+    }
+  }
 
-      while (socketChannel.read(buffer) != -1) {
-        buffer.flip();
+  private static void handleChannel(SocketChannel socketChannel) throws IOException {
+    System.out.println("Accept connect channel");
 
-        String encoded = new String(buffer.array(), StandardCharsets.UTF_8);
-        System.out.print(encoded);
+    List<Byte> packetContent = new ArrayList<>();
+    int packetLength = 0;
 
-        buffer.clear();
+    ByteBuffer buffer = ByteBuffer.allocate(64);
+    while (socketChannel.read(buffer) != -1) {
+      buffer.flip();
+      if (buffer.remaining() < PACKET_HEADER_LENGTH) {
+        buffer.compact();
+        continue;
       }
 
-      System.out.println();
-      System.out.println("Process connect complete");
-    }
+      if (packetLength == 0) {
+        packetLength = buffer.getInt();
+      }
 
+      while (packetContent.size() < packetLength && buffer.hasRemaining()) {
+        packetContent.add(buffer.get());
+      }
+
+      if (packetContent.size() == packetLength) {
+        byte[] array = new byte[packetLength];
+        for (int i = 0; i < array.length; i++) {
+          array[i] = packetContent.get(i);
+        }
+        String encoded = new String(array, StandardCharsets.UTF_8);
+        System.out.println(encoded);
+        System.out.println("Process tcp packet complete");
+
+        packetContent.clear();
+        packetLength = 0;
+      }
+
+      buffer.compact();
+    }
   }
 
   public static void main(String[] args) {

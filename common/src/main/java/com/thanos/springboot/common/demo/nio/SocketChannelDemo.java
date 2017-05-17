@@ -21,13 +21,14 @@ public class SocketChannelDemo {
       TimeUnit.MILLISECONDS.sleep(100);
     }
 
-    String text = "Hello world";
-    String text2 = " 你好啊你好啊你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊";
-    ByteBuffer buffer = ByteBuffer.wrap(text.getBytes());
-    ByteBuffer buffer2 = ByteBuffer.wrap(text2.getBytes());
+    String text = "你好啊你好啊你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好你好啊你好啊你好啊你好你好啊" +
+        "你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你你好啊你好啊你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊" +
+        "你好你好啊你好你你好啊你好啊你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好好好";
+    ByteBuffer buffer = ByteBuffer.allocate(text.getBytes().length + 4);
+    buffer.putInt(text.length()).put(text.getBytes());
 
     while (buffer.hasRemaining()) {
-      channel.write(new ByteBuffer[]{buffer, buffer2});
+      channel.write(buffer);
     }
 
     channel.close();
