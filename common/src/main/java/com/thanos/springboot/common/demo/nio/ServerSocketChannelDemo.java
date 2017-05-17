@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,14 +31,15 @@ public class ServerSocketChannelDemo {
 
       while (socketChannel.read(buffer) != -1) {
         buffer.flip();
-        while (buffer.hasRemaining()) {
-          System.out.print((char) buffer.get());
-        }
-        buffer.compact();
+
+        String encoded = new String(buffer.array(), StandardCharsets.UTF_8);
+        System.out.print(encoded);
+
+        buffer.clear();
       }
 
       System.out.println();
-      System.out.println("Process connect channel complete");
+      System.out.println("Process connect complete");
     }
 
   }

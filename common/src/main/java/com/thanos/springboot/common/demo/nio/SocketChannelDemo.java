@@ -22,9 +22,12 @@ public class SocketChannelDemo {
     }
 
     String text = "Hello world";
+    String text2 = " 你好啊你好啊你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊";
     ByteBuffer buffer = ByteBuffer.wrap(text.getBytes());
+    ByteBuffer buffer2 = ByteBuffer.wrap(text2.getBytes());
+
     while (buffer.hasRemaining()) {
-      channel.write(buffer);
+      channel.write(new ByteBuffer[]{buffer, buffer2});
     }
 
     channel.close();
