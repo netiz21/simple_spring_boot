@@ -65,10 +65,10 @@ public class FileChannelDemo {
   public static void appendFile(String fileName) throws IOException {
     RandomAccessFile raf = new RandomAccessFile(FileChannelDemo.class.getResource("/")
         .getPath() + fileName, "rw");
-    // operation for append
-    raf.seek(raf.length());
 
+    // operation for append
     FileChannel inChannel = raf.getChannel();
+    inChannel.position(inChannel.size());
 
     CharBuffer buf = CharBuffer.wrap("\nHello");
     CharBuffer buf2 = CharBuffer.wrap(" world");
@@ -92,8 +92,8 @@ public class FileChannelDemo {
     try {
 //      readFile("lesson.txt");
 //      repeatFile("lesson.txt");
-//      appendFile("lesson.txt");
-      mirrorFile("lesson.txt", "mirror.txt");
+      appendFile("lesson.txt");
+//      mirrorFile("lesson.txt", "mirror.txt");
     } catch (Exception e) {
       e.printStackTrace();
     }
