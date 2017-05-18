@@ -23,9 +23,11 @@ public class SocketChannelDemo {
 
     String text = "你好啊你好啊你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好你好啊你好啊你好啊你好你好啊" +
         "你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你你好啊你好啊你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊" +
-        "你好你好啊你好你你好啊你好啊你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好好好";
-    ByteBuffer buffer = ByteBuffer.allocate(text.getBytes().length + 4);
-    buffer.putInt(text.length()).put(text.getBytes());
+        "你好你好啊你好你你好啊你好啊你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好你好啊你好 Good Bye";
+    byte[] bytes = text.getBytes();
+    ByteBuffer buffer = ByteBuffer.allocate(bytes.length + 4);
+    buffer.putInt(bytes.length).put(bytes);
+    buffer.flip();
 
     while (buffer.hasRemaining()) {
       channel.write(buffer);
