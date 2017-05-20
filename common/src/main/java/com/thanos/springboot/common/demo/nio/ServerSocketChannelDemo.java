@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class ServerSocketChannelDemo {
   private static final int PACKET_HEADER_LENGTH = 4;
 
-  public static void openSocket() throws IOException, InterruptedException {
+  public static void startServer() throws IOException, InterruptedException {
     ServerSocketChannel serverChannel = ServerSocketChannel.open();
     serverChannel.socket().bind(new InetSocketAddress(8080));
     serverChannel.configureBlocking(false);
@@ -62,10 +62,7 @@ public class ServerSocketChannelDemo {
       }
 
       if (packetContent.size() == packetLength) {
-        byte[] array = new byte[packetLength];
-        for (int i = 0; i < array.length; i++) {
-          array[i] = packetContent.get(i);
-        }
+        byte[] array = toPrimitive(packetContent);
         String encoded = new String(array, StandardCharsets.UTF_8);
         System.out.println(encoded);
         System.out.println("Process tcp packet complete");
@@ -78,9 +75,20 @@ public class ServerSocketChannelDemo {
     }
   }
 
+  public static byte[] toPrimitive(List<Byte> list) {
+    if (list == null) {
+      return null;
+    }
+    byte[] array = new byte[list.size()];
+    for (int i = 0; i < array.length; i++) {
+      array[i] = list.get(i);
+    }
+    return array;
+  }
+
   public static void main(String[] args) {
     try {
-      openSocket();
+      startServer();
     } catch (Exception e) {
       e.printStackTrace();
     }
