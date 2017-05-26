@@ -19,6 +19,7 @@
     <guava.version>19.0</guava.version>
     <protobuf.version>2.5.0</protobuf.version>
     <swagger.version>2.6.1</swagger.version>
+    <qi4j.version>2.1</qi4j.version>
   </properties>
 
   <dependencyManagement>
@@ -149,6 +150,24 @@
         <groupId>net.bytebuddy</groupId>
         <artifactId>byte-buddy</artifactId>
         <version>1.6.14</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.qi4j.core</groupId>
+        <artifactId>org.qi4j.core.bootstrap</artifactId>
+        <version>${qi4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.qi4j.core</groupId>
+        <artifactId>org.qi4j.core.runtime</artifactId>
+        <version>${qi4j.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.qi4j.core</groupId>
+        <artifactId>org.qi4j.core.testsupport</artifactId>
+        <version>${qi4j.version}</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

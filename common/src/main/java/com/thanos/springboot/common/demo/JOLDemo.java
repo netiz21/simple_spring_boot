@@ -7,7 +7,7 @@ import org.openjdk.jol.info.ClassLayout;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author peiheng.zph created on 17/4/15 下午11:36
+ * @author solarknight created on 17/4/15 下午11:36
  * @version 1.0
  */
 public class JOLDemo {
@@ -16,14 +16,12 @@ public class JOLDemo {
     Object object = new Object();
     System.out.println(layout.toPrintable(object));
 
-    synchronized (object) {
-      System.out.println(layout.toPrintable(object));
-    }
-
-    Uninterruptibles.sleepUninterruptibly(5, TimeUnit.SECONDS);
-    synchronized (object) {
-      System.out.println(layout.toPrintable(object));
-    }
+    new Thread(() -> {
+      synchronized (object) {
+        Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
+        System.out.println(layout.toPrintable(object));
+      }
+    }).start();
 
     System.out.println(layout.toPrintable(object));
 
