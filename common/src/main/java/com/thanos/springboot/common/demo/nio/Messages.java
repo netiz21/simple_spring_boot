@@ -1,7 +1,11 @@
 package com.thanos.springboot.common.demo.nio;
 
+import com.google.common.eventbus.EventBus;
+
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author solarknight created on 17/5/24 上午11:15
@@ -11,8 +15,12 @@ public final class Messages {
 
   private static final int HEAD_LEN = 4;
 
-  public static MessageTransport newTransport(SocketChannel channel) {
-    return null;
+  public static InputMessageTransfer newInputMessageTransfer() {
+    return new SimpleInputMessageTransfer();
+  }
+
+  public static OutputMessageTransfer newOutputMessageTransfer() {
+    return new SimpleOutputMessageTransfer();
   }
 
   public static MessageEncoder newEncoder(SocketChannel channel) {
@@ -21,6 +29,47 @@ public final class Messages {
 
   public static MessageDecoder newDecoder(SocketChannel channel) {
     return new FixedHeadMessageDecoder(channel);
+  }
+
+  private static class SimpleInputMessageTransfer implements InputMessageTransfer {
+    private List<MessageDecoder> decoders = new ArrayList<>();
+    private EventBus eventBus = new EventBus();
+
+    @Override
+    public void addDecoder(MessageDecoder decoder) {
+      if (decoder == null) {
+        throw new IllegalArgumentException("Decoder can't be null");
+      }
+      this.decoders.add(decoder);
+    }
+
+    @Override
+    public void registerReceiver(Object receiver) {
+      eventBus.register(receiver);
+    }
+
+    @Override
+    public void bind(SocketChannel channel) {
+
+    }
+  }
+
+  private static class SimpleOutputMessageTransfer implements OutputMessageTransfer {
+
+    @Override
+    public void addEncoder(MessageEncoder encoder) {
+
+    }
+
+    @Override
+    public void sendMessage(byte[] message) {
+
+    }
+
+    @Override
+    public void bind(SocketChannel channel) {
+
+    }
   }
 
   private static class FixedHeadMessageEncoder implements MessageEncoder {
