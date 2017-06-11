@@ -12,15 +12,15 @@ import java.io.IOException;
  */
 public class AkkaDemo {
 
-    public static void main(String[] args) throws IOException {
-        ActorSystem actorSystem = ActorSystem.create();
+  public static void main(String[] args) throws IOException {
+    ActorSystem actorSystem = ActorSystem.create();
 
 //        ActorRef akkaBot = actorSystem.actorOf(Props.create(AkkaBot.class), "akkaBot");
 //        akkaBot.tell(new AkkaBot.Move(Direction.FORWARD), ActorRef.noSender());
 //        akkaBot.tell(new AkkaBot.Move(Direction.BACKWARDS), ActorRef.noSender());
 //        akkaBot.tell(new AkkaBot.Stop(), ActorRef.noSender());
 
-        ActorRef botMaster = actorSystem.actorOf(Props.create(BotMaster.class), "botMaster");
-        botMaster.tell(new BotMaster.StartChildBots(), ActorRef.noSender());
-    }
+    ActorRef botMaster = actorSystem.actorOf(Props.create(BotMaster.class), "botMaster");
+    botMaster.tell(new BotMaster.StartChildBots(), ActorRef.noSender());
+  }
 }

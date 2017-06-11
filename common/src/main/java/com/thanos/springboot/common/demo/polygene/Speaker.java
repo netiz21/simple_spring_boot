@@ -1,7 +1,6 @@
 package com.thanos.springboot.common.demo.polygene;
 
 import com.thanos.springboot.common.demo.polygene.impl.SpeakerMixin;
-
 import org.qi4j.api.mixin.Mixins;
 
 /**

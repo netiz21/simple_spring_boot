@@ -1,7 +1,6 @@
 package com.thanos.springboot.common.demo;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
-
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
@@ -102,7 +101,7 @@ public class UnsafeDemo {
           if (i2 > last)
             System.out.print(", +" + Long.toHexString(i2 - last));
           else
-            System.out.print(", -" + Long.toHexString( last - i2));
+            System.out.print(", -" + Long.toHexString(last - i2));
           last = i2;
         }
         break;

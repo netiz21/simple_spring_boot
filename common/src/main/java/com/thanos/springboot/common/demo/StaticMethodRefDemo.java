@@ -5,17 +5,17 @@ package com.thanos.springboot.common.demo;
  * @version 1.0
  */
 public class StaticMethodRefDemo {
-    interface Printer {
-        void print(String val);
-    }
+  interface Printer {
+    void print(String val);
+  }
 
-    public void printSomething(String something, Printer printer) {
-        printer.print(something);
-    }
+  public void printSomething(String something, Printer printer) {
+    printer.print(something);
+  }
 
-    public static void main(String[] args) {
-        StaticMethodRefDemo demo = new StaticMethodRefDemo();
-        String str = "Hello, world!";
-        demo.printSomething(str, System.out::println);
-    }
+  public static void main(String[] args) {
+    StaticMethodRefDemo demo = new StaticMethodRefDemo();
+    String str = "Hello, world!";
+    demo.printSomething(str, System.out::println);
+  }
 }

@@ -1,9 +1,8 @@
 package com.thanos.springboot.common.demo;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
-
-import com.alibaba.fastjson.JSON;
 
 import java.util.List;
 

@@ -2,6 +2,7 @@ package com.thanos.springboot.common.demo.nio;
 
 import com.google.common.eventbus.EventBus;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
@@ -13,75 +14,77 @@ import java.util.List;
  */
 public final class Messages {
 
-  private static final int HEAD_LEN = 4;
+  private static final int MESSAGE_HEAD_LEN = 4;
 
-  public static InputMessageTransfer newInputMessageTransfer() {
-    return new SimpleInputMessageTransfer();
+  public static PipeMessageTransfer newPipeMessageTransfer() {
+    return new SimplePipeMessageTransfer();
   }
 
-  public static OutputMessageTransfer newOutputMessageTransfer() {
-    return new SimpleOutputMessageTransfer();
+  public static MessageEncoder newFixedHeadMessageEncoder() {
+    return new FixedHeadMessageEncoder();
   }
 
-  public static MessageEncoder newEncoder(SocketChannel channel) {
-    return new FixedHeadMessageEncoder(channel);
+  public static MessageDecoder newFixedHeadMessageDecoder() {
+    return new FixedHeadMessageDecoder();
   }
 
-  public static MessageDecoder newDecoder(SocketChannel channel) {
-    return new FixedHeadMessageDecoder(channel);
-  }
+  private static class SimplePipeMessageTransfer implements PipeMessageTransfer {
+    private MessageEncoder encoder;
+    private MessageDecoder decoder;
 
-  private static class SimpleInputMessageTransfer implements InputMessageTransfer {
-    private List<MessageDecoder> decoders = new ArrayList<>();
     private EventBus eventBus = new EventBus();
 
     @Override
     public void addDecoder(MessageDecoder decoder) {
       if (decoder == null) {
-        throw new IllegalArgumentException("Decoder can't be null");
+        throw new IllegalArgumentException();
       }
-      this.decoders.add(decoder);
+      this.decoder = decoder;
     }
 
     @Override
-    public void registerReceiver(Object receiver) {
+    public void registerReceiver(MessageReceiver receiver) {
+      if (receiver == null) {
+        throw new IllegalArgumentException();
+      }
       eventBus.register(receiver);
     }
 
     @Override
-    public void bind(SocketChannel channel) {
+    public boolean receiveMessage(SocketChannel channel) throws IOException {
+      boolean complete = false;
+      ByteBuffer buffer = ByteBuffer.allocate(64);
+      while (channel.read(buffer) > 0) {
+        buffer.flip();
 
+        byte[] content = decoder.decode(buffer);
+        if (content != null) {
+          complete = true;
+          eventBus.post(content);
+        }
+        buffer.compact();
+      }
+      return complete;
     }
-  }
-
-  private static class SimpleOutputMessageTransfer implements OutputMessageTransfer {
 
     @Override
     public void addEncoder(MessageEncoder encoder) {
-
+      if (encoder == null) {
+        throw new IllegalArgumentException();
+      }
+      this.encoder = encoder;
     }
 
     @Override
-    public void sendMessage(byte[] message) {
-
-    }
-
-    @Override
-    public void bind(SocketChannel channel) {
-
+    public void sendMessage(byte[] message, SocketChannel channel) throws IOException {
+      channel.write(encoder.encode(message));
     }
   }
 
   private static class FixedHeadMessageEncoder implements MessageEncoder {
-    private SocketChannel channel;
-
-    public FixedHeadMessageEncoder(SocketChannel channel) {
-      this.channel = channel;
-    }
-
     @Override
     public ByteBuffer encode(byte[] bytes) {
-      ByteBuffer buffer = ByteBuffer.allocate(bytes.length + HEAD_LEN);
+      ByteBuffer buffer = ByteBuffer.allocate(bytes.length + MESSAGE_HEAD_LEN);
       buffer.putInt(bytes.length).put(bytes);
       buffer.flip();
       return buffer;
@@ -89,15 +92,41 @@ public final class Messages {
   }
 
   private static class FixedHeadMessageDecoder implements MessageDecoder {
-    private SocketChannel channel;
-
-    public FixedHeadMessageDecoder(SocketChannel channel) {
-      this.channel = channel;
-    }
+    private List<Byte> packetContent = new ArrayList<>();
+    private int packetLength = 0;
 
     @Override
     public byte[] decode(ByteBuffer buffer) {
-      return new byte[0];
+      if (packetLength == 0 && buffer.remaining() < MESSAGE_HEAD_LEN) {
+        return null;
+      }
+      if (packetLength == 0 && buffer.remaining() > MESSAGE_HEAD_LEN) {
+        packetLength = buffer.getInt();
+      }
+
+      while (packetContent.size() < packetLength && buffer.hasRemaining()) {
+        packetContent.add(buffer.get());
+      }
+
+      if (packetContent.size() == packetLength) {
+        byte[] array = toPrimitive(packetContent);
+        packetContent.clear();
+        packetLength = 0;
+
+        return array;
+      }
+      return null;
+    }
+
+    private static byte[] toPrimitive(List<Byte> list) {
+      if (list == null) {
+        return null;
+      }
+      byte[] array = new byte[list.size()];
+      for (int i = 0; i < array.length; i++) {
+        array[i] = list.get(i);
+      }
+      return array;
     }
   }
 

@@ -5,5 +5,5 @@ package com.thanos.springboot.common.demo.akka;
  * @version 1.0
  */
 public enum Direction {
-    FORWARD, BACKWARDS, RIGHT, LEFT;
+  FORWARD, BACKWARDS, RIGHT, LEFT;
 }

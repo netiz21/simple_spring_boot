@@ -1,14 +1,11 @@
 package com.thanos.springboot.common.demo.nio;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -21,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @author solarknight created on 2017/6/4 上午10:12
  * @version 1.0
  */
-public class NioClient {
+public class NioClient implements MessageReceiver {
   private static final Logger logger = LoggerFactory.getLogger(NioClient.class);
 
   public static final int DEFAULT_PORT = 8080;
@@ -29,6 +26,8 @@ public class NioClient {
   private int port = DEFAULT_PORT;
 
   private Selector selector;
+
+  private PipeMessageTransfer transfer;
 
   public static NioClient newClient() {
     return new NioClient();
@@ -44,20 +43,26 @@ public class NioClient {
       selector = Selector.open();
       channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 
-      EventBus eventBus = new EventBus();
-      eventBus.register(this);
+      transfer = buildMessageTransfer();
+      transfer.registerReceiver(this);
+
+      // listen client input
+      new Thread(new ClientInputListener(this)).start();
 
       logger.info("Client started...");
 
-      // listen client input
-      new Thread(new ClientInputListener(eventBus)).start();
-
       // listen server resp
-      persistentListen(eventBus);
-
+      persistentListen();
     } catch (Exception e) {
       logger.error("Fail to start client", e);
     }
+  }
+
+  private PipeMessageTransfer buildMessageTransfer() {
+    PipeMessageTransfer messageTransfer = Messages.newPipeMessageTransfer();
+    messageTransfer.addEncoder(Messages.newFixedHeadMessageEncoder());
+    messageTransfer.addDecoder(Messages.newFixedHeadMessageDecoder());
+    return messageTransfer;
   }
 
   private SocketChannel openNonBlockingChannel(int port) throws IOException, InterruptedException {
@@ -71,79 +76,80 @@ public class NioClient {
     return channel;
   }
 
-  private void persistentListen(EventBus eventBus) {
+  private void persistentListen() {
     while (true) {
       int readyChannels = 0;
       try {
         readyChannels = selector.select(TimeUnit.SECONDS.toMillis(1));
-
-        if (readyChannels == 0) {
-          continue;
-        }
-
-        Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
-        while (keyIterator.hasNext()) {
-          SelectionKey key = keyIterator.next();
-
-          if (key.isReadable()) {
-            readKey(eventBus, key);
-          }
-          keyIterator.remove();
-        }
       } catch (IOException e) {
-        logger.error("Error process client input", e);
+        logger.error("Error select channels", e);
       }
-    }
-  }
-
-  private void readKey(EventBus eventBus, SelectionKey key) throws IOException {
-    SocketChannel channel = (SocketChannel) key.channel();
-    ByteBuffer buffer = ByteBuffer.allocate(1024);
-
-    while (channel.read(buffer) > 0) {
-      logger.info("Receive content = {}", new String(buffer.array(), StandardCharsets.UTF_8));
-      eventBus.post(newRespEvent(new String(buffer.array(), StandardCharsets.UTF_8)));
-      buffer.clear();
-    }
-  }
-
-  @Subscribe
-  public void handleClientInput(ClientInputEvent event) {
-    int readyChannels = 0;
-    try {
-      readyChannels = selector.select(TimeUnit.SECONDS.toMillis(1));
 
       if (readyChannels == 0) {
-        logger.error("No available channels");
-        return;
+        continue;
       }
 
       Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
       while (keyIterator.hasNext()) {
         SelectionKey key = keyIterator.next();
 
-        if (key.isWritable()) {
-          SocketChannel channel = (SocketChannel) key.channel();
-          channel.write(ByteBuffer.wrap(event.message().getBytes()));
+        if (key.isReadable()) {
+          try {
+            readKey(key);
+          } catch (IOException e) {
+            logger.error("Error process client input", e);
+          }
         }
         keyIterator.remove();
       }
+    }
+  }
 
+  private void readKey(SelectionKey key) throws IOException {
+    SocketChannel channel = (SocketChannel) key.channel();
+    transfer.receiveMessage(channel);
+  }
+
+  public void onClientInput(String msg) {
+    int readyChannels = 0;
+    try {
+      readyChannels = selector.select(TimeUnit.SECONDS.toMillis(1));
     } catch (IOException e) {
       logger.error("Error process client input", e);
+      return;
+    }
+
+    if (readyChannels == 0) {
+      logger.error("No available channels, discard input message = {}", msg);
+      return;
+    }
+
+    Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
+    while (keyIterator.hasNext()) {
+      SelectionKey key = keyIterator.next();
+
+      if (key.isWritable()) {
+        try {
+          transfer.sendMessage(msg.getBytes(), (SocketChannel) key.channel());
+        } catch (IOException e) {
+          logger.error("Error send message, content = {}", msg, e);
+        }
+      }
+      keyIterator.remove();
     }
   }
 
   @Subscribe
-  public void handleServerResp(ServerRespEvent event) {
-    System.out.println(event.message());
+  @Override
+  public void receive(byte[] message) {
+    logger.info("Receive message = {}", new String(message, StandardCharsets.UTF_8));
   }
 
   private static class ClientInputListener implements Runnable {
-    private EventBus eventBus;
+    private NioClient client;
 
-    public ClientInputListener(EventBus eventBus) {
-      this.eventBus = eventBus;
+    public ClientInputListener(NioClient client) {
+      this.client = client;
     }
 
     @Override
@@ -152,42 +158,8 @@ public class NioClient {
       while (true) {
         String msg = scanner.nextLine();
         // send message
-        eventBus.post(newInputEvent(msg));
+        client.onClientInput(msg);
       }
-    }
-  }
-
-  private static ClientInputEvent newInputEvent(String message) {
-    return new ClientInputEvent(message);
-  }
-
-  private static ServerRespEvent newRespEvent(String message) {
-    return new ServerRespEvent(message);
-  }
-
-  private static class ClientInputEvent implements MessageEvent {
-    private String message;
-
-    public ClientInputEvent(String message) {
-      this.message = message;
-    }
-
-    @Override
-    public String message() {
-      return message;
-    }
-  }
-
-  private static class ServerRespEvent implements MessageEvent {
-    private String message;
-
-    public ServerRespEvent(String message) {
-      this.message = message;
-    }
-
-    @Override
-    public String message() {
-      return message;
     }
   }
 

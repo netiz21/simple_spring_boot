@@ -1,7 +1,6 @@
 package com.thanos.springboot.common.demo;
 
 import com.google.common.util.concurrent.Uninterruptibles;
-
 import org.openjdk.jol.info.ClassLayout;
 
 import java.util.concurrent.TimeUnit;
