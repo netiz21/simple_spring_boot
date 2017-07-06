@@ -109,20 +109,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <executions>
-          <execution>
-            <id>default-compile</id>
-            <configuration>
-              <compilerArgument>-proc:none</compilerArgument>
-              <includes>
-                <include>com.thanos.springboot.common.demo.annotation.ShineProcessor</include>
-              </includes>
-            </configuration>
-          </execution>
-        </executions>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
       </plugin>
     </plugins>
   </build>
-
 </project>
