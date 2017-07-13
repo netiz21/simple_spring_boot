@@ -3,14 +3,17 @@ package com.thanos.springboot.web;
 import com.thanos.springboot.common.MessageResource;
 import com.thanos.springboot.common.StandardResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,10 +29,14 @@ public class IndexController {
   @Autowired
   private MessageResource messageResource;
 
+  @Autowired
+  private StringRedisTemplate stringRedisTemplate;
+
   @GetMapping("/hello")
   public String index() {
-    String str = "hello, world3";
-    logger.info(str);
+    if (StringUtils.isEmpty(stringRedisTemplate.opsForValue().get("hello"))) {
+      stringRedisTemplate.opsForValue().set("hello", "world", 5, TimeUnit.SECONDS);
+    }
     return "Hello, world!";
   }
 
