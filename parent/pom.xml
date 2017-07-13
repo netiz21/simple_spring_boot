@@ -19,7 +19,7 @@
   <properties>
     <guava.version>19.0</guava.version>
     <protobuf.version>2.5.0</protobuf.version>
-    <swagger.version>2.6.1</swagger.version>
+    <swagger.version>2.7.0</swagger.version>
     <qi4j.version>2.1</qi4j.version>
     <lombok.version>1.16.16</lombok.version>
   </properties>
