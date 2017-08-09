@@ -16,7 +16,7 @@
   </parent>
 
   <properties>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
     <capsule.version>1.0.3</capsule.version>
     <capsule.maven.version>1.0.3</capsule.maven.version>
     <capsule.maven.plugin.version>1.5.1</capsule.maven.plugin.version>
@@ -32,6 +32,11 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jdbc</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
     </dependency>
 
     <dependency>
@@ -105,6 +110,11 @@
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-bean-validators</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
     </dependency>
   </dependencies>
 

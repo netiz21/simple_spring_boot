@@ -12,14 +12,16 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.4.2.RELEASE</version>
+    <version>1.5.3.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
   <properties>
     <guava.version>19.0</guava.version>
     <protobuf.version>2.5.0</protobuf.version>
-    <swagger.version>2.6.1</swagger.version>
+    <swagger.version>2.7.0</swagger.version>
     <qi4j.version>2.1</qi4j.version>
+    <lombok.version>1.16.16</lombok.version>
   </properties>
 
   <dependencyManagement>
@@ -168,6 +170,12 @@
         <artifactId>org.qi4j.core.testsupport</artifactId>
         <version>${qi4j.version}</version>
         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
       </dependency>
 
       <dependency>

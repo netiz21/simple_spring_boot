@@ -1,14 +1,16 @@
 package com.thanos.springboot.common;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * @author solarknight created on 2016/11/20 0:33
  * @version 1.0
  */
-@Component
-@ConfigurationProperties(locations = "classpath:message.yaml", prefix = "msg")
+@Configuration
+@PropertySource(value = "classpath:message.yml", factory = YamlPropertySourceFactory.class)
+@ConfigurationProperties("msg")
 public class MessageResource {
 
   private String name;

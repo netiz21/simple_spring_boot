@@ -7,11 +7,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import springfox.documentation.builders.PathSelectors;
+import java.util.Collections;
+
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -27,17 +29,25 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Import({springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration.class})
 public class SwaggerConfig {
   private static final Logger logger = LoggerFactory.getLogger(SwaggerConfig.class);
+  private static final String BASE_PACKAGE = "com.thanos.springboot.web";
 
   private static final String PROPERTY_PROFILE = "profile";
-  private static final String PROD_KEYWORD = "online";
+  private static final String TEST_KEYWORD = "test";
+  private static final String DOC_EXPANSION = "list";
+
+  @Bean
+  public UiConfiguration uiConfig() {
+    return new UiConfiguration(
+        null, DOC_EXPANSION, "alpha", "schema", UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS, false, true, null
+    );
+  }
 
   @Bean
   public Docket userApi() {
     return new Docket(DocumentationType.SWAGGER_2)
         .enable(enableByEnv())
         .select()
-        .apis(RequestHandlerSelectors.basePackage("com.thanos.springboot"))
-        .paths(PathSelectors.regex("/user/.*"))
+        .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
         .build()
         .apiInfo(metaApiInfo());
   }
@@ -48,25 +58,24 @@ public class SwaggerConfig {
    */
   private boolean enableByEnv() {
     String profile = System.getProperty(PROPERTY_PROFILE);
-    boolean enable = StringUtils.isEmpty(profile) || !isProdEnv(profile);
+    boolean enable = StringUtils.isEmpty(profile) || isTestEnv(profile);
 
-    logger.info("Current profile is {}, set spring fox enabled {}", profile, enable);
+    logger.info("Current profile is {}, enable spring fox {}", profile, enable);
     return enable;
   }
 
-  private boolean isProdEnv(String profile) {
-    return profile.contains(PROD_KEYWORD);
+  private boolean isTestEnv(String profile) {
+    return profile.equalsIgnoreCase("dev") || profile.contains(TEST_KEYWORD);
   }
 
   private ApiInfo metaApiInfo() {
     return new ApiInfo(
-        "Spring Boot REST API",
-        "Spring Boot REST API for User",
+        "UC API",
+        "UC重构接口文档",
         "1.0",
         "Terms of service",
         ApiInfo.DEFAULT_CONTACT,
         "Apache License Version 2.0",
-        "https://www.apache.org/licenses/LICENSE-2.0");
+        "https://www.apache.org/licenses/LICENSE-2.0", Collections.emptyList());
   }
-
 }
