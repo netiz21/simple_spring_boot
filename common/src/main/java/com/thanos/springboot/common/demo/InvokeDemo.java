@@ -1,17 +1,18 @@
 package com.thanos.springboot.common.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author solarknight created on 2017/8/6 19:35
  * @version 1.0
  */
-@Slf4j
 public class InvokeDemo {
+  private static final Logger log = LoggerFactory.getLogger(InvokeDemo.class);
 
   public static void main(String[] args) {
     invokeVirtualMethod();
