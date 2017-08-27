@@ -121,6 +121,10 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>io.github.benas</groupId>
+      <artifactId>random-beans</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
