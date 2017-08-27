@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit;
  */
 
 @State(Scope.Benchmark)
-//@OutputTimeUnit(TimeUnit.MILLISECONDS)
-//@Warmup(iterations = 4)
-//@Fork(value = 5, jvmArgsAppend = {"-XX:BiasedLockingStartupDelay=0"}) // use biased locking
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@Warmup(iterations = 3)
+@Fork(value = 1, jvmArgsAppend = {"-XX:BiasedLockingStartupDelay=0"}) // use biased locking
 //@Fork(value = 5, jvmArgsAppend = {"-XX:-UseBiasedLocking", "-XX:BiasedLockingStartupDelay=0"})
 public class BiasedLockingBenchmark {
 
