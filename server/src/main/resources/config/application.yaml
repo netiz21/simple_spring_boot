@@ -3,9 +3,20 @@ server:
   context-path: /ssb
 spring:
   datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/user_info?autoReconnect=true&maxReconnects=10&useUnicode=true&characterEncoding=utf8
     username: root
     password: solarknight
+    hikari:
+      autoCommit: true
+      connectionTimeout: 30000
+      idleTimeout: 300000
+      maxLifetime: 1800000
+      minimumIdle: 5
+      maximumPoolSize: 100
+      connectionTestQuery: select 1
+      leakDetectionThreshold: 30000
   redis:
     database: 0
     password:
