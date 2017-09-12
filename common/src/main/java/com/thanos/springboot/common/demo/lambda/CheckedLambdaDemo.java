@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import static com.thanos.springboot.common.demo.lambda.LambdaExceptionUtil.rethrowFunction;
-import static com.thanos.springboot.common.demo.lambda.LambdaInvokeUtil.callUnchecked;
+import static com.thanos.springboot.common.demo.lambda.LambdaUtils.callUnchecked;
 import static com.thanos.springboot.common.demo.lambda.SimpleUtil.uncheckCall;
 
 /**
