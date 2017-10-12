@@ -4,7 +4,7 @@
 
   <groupId>com.thanos.web</groupId>
   <artifactId>parent</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <parent>
@@ -17,7 +17,7 @@
   <scm>
     <url>https://github.com/solarknight/simple_spring_boot</url>
     <developerConnection>scm:git:ssh://git@github.com/solarknight/simple_spring_boot.git</developerConnection>
-    <tag>parent-1.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <properties>
