@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="60 seconds" debug="false">
-  <property name="log.dir" value="logs"/>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
-  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} %-5L: %m%n</pattern>
-    </encoder>
-  </appender>
+  <property name="LOG_FILE" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/server"/>
 
-  <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>WARN</level>
-    </filter>
-    <Append>true</Append>
-    <File>${log.dir}/error.log</File>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${log.dir}/error.log.%d{yyyy-MM-dd}</fileNamePattern>
-      <maxHistory>15</maxHistory>
-    </rollingPolicy>
+  <!-- override default pattern to show line number -->
+  <property name="FILE_LOG_PATTERN"
+            value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} %L: %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+  <property name="FATAL_LOG_PATTERN"
+            value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} %L --- UA:%X{req.ua} CK:%X{req.cookies} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+  <!-- override default pattern to show line number -->
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} %-5L: %m%n</pattern>
+      <pattern>${FILE_LOG_PATTERN}</pattern>
     </encoder>
+    <file>${LOG_FILE}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.log</fileNamePattern>
+    </rollingPolicy>
   </appender>
 
-  <root level="info">
-    <appender-ref ref="console"/>
-    <appender-ref ref="error"/>
+  <appender name="FATAL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+    <encoder>
+      <pattern>${FATAL_LOG_PATTERN}</pattern>
+    </encoder>
+    <file>${LOG_FILE}.FATAL</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.FATAL</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="FILE"/>
+    <appender-ref ref="FATAL_FILE"/>
   </root>
 </configuration>

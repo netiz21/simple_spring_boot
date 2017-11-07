@@ -125,6 +125,10 @@
       <groupId>io.github.benas</groupId>
       <artifactId>random-beans</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.sun.tools.btrace</groupId>
+      <artifactId>btrace-boot</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
