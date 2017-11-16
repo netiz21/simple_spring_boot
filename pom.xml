@@ -4,13 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>simple_spring_boot</artifactId>
+  <artifactId>boot-project</artifactId>
+  <version>${uniform-module.version}</version>
   <packaging>pom</packaging>
 
   <parent>
-    <groupId>com.thanos.web</groupId>
-    <artifactId>parent</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <groupId>com.thanos.spring.web</groupId>
+    <artifactId>boot-parent</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
     <relativePath>parent/pom.xml</relativePath>
   </parent>
 
