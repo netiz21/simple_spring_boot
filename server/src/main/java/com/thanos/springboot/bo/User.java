@@ -3,6 +3,8 @@ package com.thanos.springboot.bo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.Objects;
+
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -50,6 +52,20 @@ public class User {
 
   public void setDescp(String descp) {
     this.descp = descp;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return Objects.equals(id, user.id) &&
+        Objects.equals(name, user.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name);
   }
 
   @Override
