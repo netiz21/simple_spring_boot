@@ -1,11 +1,11 @@
 CREATE TABLE `user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'name',
-  `sex` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'sex, 0 woman, 1 man',
-  `descp` varchar(100) NOT NULL DEFAULT '' COMMENT 'description',
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `sex` varchar(6) NOT NULL DEFAULT '',
+  `descp` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `idx_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='user table'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `operation` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -17,4 +17,4 @@ CREATE TABLE `operation` (
   `create_time` datetime NOT NULL DEFAULT '2000-01-01 00:00:00',
   PRIMARY KEY (`id`),
   KEY `idx_create_time` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='operation log';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

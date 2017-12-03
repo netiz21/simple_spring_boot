@@ -1,7 +1,7 @@
 package com.thanos.springboot.service.impl;
 
 import com.thanos.springboot.bo.Operation;
-import com.thanos.springboot.dao.OperationMapper;
+import com.thanos.springboot.dao.OperationDao;
 import com.thanos.springboot.service.IOperationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +17,14 @@ import java.util.Date;
 public class OperationService implements IOperationService {
 
   @Autowired
-  private OperationMapper operationMapper;
+  private OperationDao operationDao;
 
   @Override
   public Operation findById(Long id) {
     if (id == null) {
       return null;
     }
-    return operationMapper.selectByPrimaryKey(id);
+    return operationDao.findById(id);
   }
 
   @Override
@@ -37,6 +37,6 @@ public class OperationService implements IOperationService {
       operation.setCreateTime(new Date());
     }
 
-    operationMapper.insertSelective(operation);
+    operationDao.insert(operation);
   }
 }

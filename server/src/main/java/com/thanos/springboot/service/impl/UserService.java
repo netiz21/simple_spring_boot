@@ -2,7 +2,7 @@ package com.thanos.springboot.service.impl;
 
 import com.thanos.springboot.bo.User;
 import com.thanos.springboot.common.oplog.OpLog;
-import com.thanos.springboot.dao.UserMapper;
+import com.thanos.springboot.dao.UserDao;
 import com.thanos.springboot.service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +18,16 @@ import java.util.List;
 public class UserService implements IUserService {
 
   @Autowired
-  private UserMapper userMapper;
+  private UserDao userDao;
 
   @Override
   public User findById(long id) {
-    return userMapper.findById(id);
+    return userDao.findById(id);
   }
 
   @Override
   public List<User> findAll() {
-    return userMapper.findAll();
+    return userDao.findAll();
   }
 
   @OpLog
@@ -36,6 +36,6 @@ public class UserService implements IUserService {
     if (user == null) {
       return false;
     }
-    return userMapper.insert(user) > 0;
+    return userDao.insert(user.getName(), user.getSex(), user.getDescp()) > 0;
   }
 }

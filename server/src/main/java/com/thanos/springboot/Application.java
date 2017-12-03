@@ -2,9 +2,8 @@ package com.thanos.springboot;
 
 import com.thanos.springboot.common.CustomApplicationListener;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 
 /**
@@ -12,13 +11,13 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
  * @version 1.0
  */
 @SpringBootApplication
-@MapperScan("com.thanos.springboot.dao")
 @EnableSpringConfigured
 public class Application {
 
   public static void main(String[] args) {
-    SpringApplication app = new SpringApplication(Application.class);
-    app.addListeners(CustomApplicationListener.INSTANCE);
-    app.run(args);
+    new SpringApplicationBuilder()
+        .sources(Application.class)
+        .listeners(CustomApplicationListener.INSTANCE)
+        .run(args);
   }
 }

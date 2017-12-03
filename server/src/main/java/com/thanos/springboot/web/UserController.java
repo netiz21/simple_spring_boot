@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/user")
-@Api(value = "user controller", description = "CRUD operation about user")
+@Api(value = "user controller", description = "CRUD operations about user")
 public class UserController {
 
   private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -68,7 +68,7 @@ public class UserController {
   @ApiOperation("Add new user")
   @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
   public StandardResponse<Void> createUser(@Valid @RequestBody UserCreateReqVo reqVo) {
-    User user = UserCreateReqVo.UserCreateReqVoConverter.convert(reqVo);
+    User user = UserCreateReqVo.Converter.toUser(reqVo);
     boolean success = userService.createUser(user);
     if (success) {
       return StandardResponse.ok();
