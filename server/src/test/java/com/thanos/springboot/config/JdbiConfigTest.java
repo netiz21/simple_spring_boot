@@ -1,7 +1,5 @@
 package com.thanos.springboot.config;
 
-import com.google.common.base.Joiner;
-
 import com.thanos.springboot.bo.User;
 
 import org.assertj.core.util.Lists;
