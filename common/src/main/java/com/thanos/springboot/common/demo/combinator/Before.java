@@ -9,6 +9,7 @@ import java.util.stream.Stream;
  * @author peiheng.zph created on 17/12/18 下午5:32
  * @version 1.0
  */
+@FunctionalInterface
 public interface Before<T, R> extends Function<Consumer<T>, Function<Function<T, R>, Function<T, R>>> {
 
   static <T, R> Before<T, R> create() {
