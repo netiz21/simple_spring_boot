@@ -2,6 +2,7 @@ package com.thanos.springboot.config;
 
 import com.thanos.springboot.bo.User;
 
+import org.assertj.core.util.Lists;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.junit.After;
@@ -14,7 +15,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 /**
  * @author peiheng.zph created on 17/11/16 下午7:56
@@ -84,6 +89,18 @@ public class JdbiConfigTest {
     user.setId(id);
     user.setName(name);
     return user;
+  }
+
+  @Test
+  public void testQuery3() {
+    List<Long> list = Lists.newArrayList(1L, 2L, 3L);
+    List<Map<String, Object>> result = handle.createQuery("select * from user where id in (<ids>)")
+        .bindList("ids", list)
+        .mapToMap()
+        .list();
+
+    assertThat(result).isNotNull();
+    then(result.size()).isEqualTo(3);
   }
 
   @After
