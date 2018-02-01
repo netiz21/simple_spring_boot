@@ -33,12 +33,12 @@ public class OpLogAspect {
 
   @Around("logPoint()")
   public Object logProcess(ProceedingJoinPoint pjp) throws Throwable {
-    if (SecLogContext.checkLogContext()) {
+    if (OpLogContext.checkLogContext()) {
       log.info("Find existed log context, skip process");
       return pjp.proceed();
     }
 
-    SecLogContext.startLogContext();
+    OpLogContext.startLogContext();
     log.info("Start log process now");
 
     try {
@@ -51,7 +51,7 @@ public class OpLogAspect {
       throw t;
 
     } finally {
-      SecLogContext.destroyLogContext();
+      OpLogContext.destroyLogContext();
     }
   }
 

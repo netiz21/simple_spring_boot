@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
-public class SecLogContext {
+public class OpLogContext {
 
   private static ThreadLocal<Boolean> logSign = new ThreadLocal<>();
 
