@@ -11,6 +11,10 @@ import java.util.function.Supplier;
  */
 public interface Combinator<T, R> extends Function<T, R> {
 
+  static <T, R> Combinator<T, R> target(Function<T, R> function) {
+    return function::apply;
+  }
+
   default Combinator<T, R> before(Consumer<T> consumer) {
     return it -> {
       consumer.accept(it);
