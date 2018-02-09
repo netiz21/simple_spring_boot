@@ -35,7 +35,7 @@ public class CombinatorsTest {
   public void target() throws Exception {
     for (int i = 0; i < 10; i++) {
 
-      Combinators.target(String::length)
+      Combinator.target(String::length)
           .before(System.out::println)
           .after((args, res) -> System.out.println("Input " + args + " length " + res))
           .supplier(this::randomWord)
