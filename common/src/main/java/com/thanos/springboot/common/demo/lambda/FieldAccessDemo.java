@@ -12,6 +12,9 @@ import lombok.val;
 import static java.util.stream.Collectors.toList;
 
 /**
+ * Field access demo that looks more like natural language
+ * {@see https://dzone.com/articles/field-access-interfaces-for-more-readable-java-stream-code}
+ *
  * @author peiheng.zph created on 18/2/9 上午11:34
  * @version 1.0
  */
