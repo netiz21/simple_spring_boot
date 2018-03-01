@@ -7,8 +7,6 @@ import com.thanos.springboot.service.IUserService;
 import com.thanos.springboot.vo.UserCreateReqVo;
 import com.thanos.springboot.vo.UserQueryReqVo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +23,17 @@ import javax.validation.Valid;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author solarknight created on 16/12/10 上午11:23
  * @version 1.0
  */
+@Slf4j
 @RestController
 @RequestMapping("/user")
 @Api(value = "user controller", description = "CRUD operations about user")
 public class UserController {
-
-  private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
   @Autowired
   private IUserService userService;
@@ -50,7 +48,7 @@ public class UserController {
   @ApiOperation(value = "View user by id and other condition")
   @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
   public StandardResponse<User> getUser(@Valid @ModelAttribute UserQueryReqVo reqVo) {
-    logger.info("Query param {}", reqVo);
+    log.info("Query param {}", reqVo);
     User user = userService.findById(reqVo.getId());
     return StandardResponse.ok(user);
   }
@@ -60,7 +58,7 @@ public class UserController {
   public StandardResponse<List<User>> users() {
     long begin = System.currentTimeMillis();
     List<User> users = userService.findAll();
-    logger.info("invoke UserController#users success, time consume = {}",
+    log.info("invoke UserController#users success, time consume = {}",
         System.currentTimeMillis() - begin);
     return StandardResponse.ok(users);
   }

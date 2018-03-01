@@ -30,3 +30,10 @@ spring:
       min-idle: 1
     host: 127.0.0.1
     port: 6379
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic

@@ -4,8 +4,6 @@ import com.thanos.springboot.common.MessageResource;
 import com.thanos.springboot.common.StandardResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +15,16 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author solarknight created on 2016/11/20 0:16
  * @version 1.0
  */
+@Slf4j
 @RestController
 @RequestMapping("/index")
 public class IndexController {
-  private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
   @Autowired
   private MessageResource messageResource;
@@ -55,11 +55,11 @@ public class IndexController {
 
   @GetMapping("/standard")
   public StandardResponse<Void> standard(HttpServletRequest req) {
-    logger.info("Request uri = {}", req.getRequestURI());
-    logger.info("Request url = {}", req.getRequestURL());
-    logger.info("Servlet path = {}", req.getServletPath());
-    logger.info("Request context path = {}", req.getContextPath());
-    logger.info("url + query string = {}", req.getRequestURL().toString() + "?" + req.getQueryString());
+    log.info("Request uri = {}", req.getRequestURI());
+    log.info("Request url = {}", req.getRequestURL());
+    log.info("Servlet path = {}", req.getServletPath());
+    log.info("Request context path = {}", req.getContextPath());
+    log.info("url + query string = {}", req.getRequestURL().toString() + "?" + req.getQueryString());
     return StandardResponse.ok();
   }
 
@@ -70,7 +70,7 @@ public class IndexController {
         throw new IllegalArgumentException("input is less than 10!");
       }
     } catch (Exception e) {
-      logger.error("Found exception!", e);
+      log.error("Found exception!", e);
     }
     return StandardResponse.ok();
   }
