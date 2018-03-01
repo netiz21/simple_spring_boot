@@ -42,6 +42,7 @@
     <mockito.version>2.8.9</mockito.version>
     <jdbi.version>3.0.0</jdbi.version>
     <flyway.version>4.2.0</flyway.version>
+    <selenium.version>2.53.1</selenium.version>
   </properties>
 
   <dependencyManagement>
@@ -251,6 +252,12 @@
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-core</artifactId>
         <version>${flyway.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>${selenium.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

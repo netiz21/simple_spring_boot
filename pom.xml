@@ -22,5 +22,6 @@
     <module>common</module>
     <module>agent</module>
     <module>proto</module>
+    <module>selenium</module>
   </modules>
 </project>
