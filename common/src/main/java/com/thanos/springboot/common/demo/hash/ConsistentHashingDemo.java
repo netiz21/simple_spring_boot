@@ -44,7 +44,7 @@ public class ConsistentHashingDemo {
   /**
    * Given a hash key and total buckets size, return the target bucket index
    */
-  interface HashFunction extends BiFunction<String, Integer, Integer> {
+  interface Dispatcher extends BiFunction<String, Integer, Integer> {
   }
 
   public void run() {
@@ -60,7 +60,7 @@ public class ConsistentHashingDemo {
     benchmark(this::ringHashWithVirtualNode);
   }
 
-  private void benchmark(HashFunction func) {
+  private void benchmark(Dispatcher func) {
     log.info("==============  Benchmark start  ==============");
 
     arrange(DATA_SET, buckets, func);
@@ -70,11 +70,11 @@ public class ConsistentHashingDemo {
     log.info("==============  Benchmark stop  ==============");
   }
 
-  private void arrange(Set<String> dataSet, List<Bucket> buckets, HashFunction func) {
+  private void arrange(Set<String> dataSet, List<Bucket> buckets, Dispatcher func) {
     dataSet.forEach(it -> buckets.get(func.apply(it, buckets.size())).add(it));
   }
 
-  private void evaluate(Set<String> dataSet, List<Bucket> buckets, HashFunction function) {
+  private void evaluate(Set<String> dataSet, List<Bucket> buckets, Dispatcher function) {
     Map<String, Integer> originIdxMap = new HashMap<>();
     dataSet.forEach(it -> originIdxMap.put(it, function.apply(it, buckets.size())));
 
