@@ -45,7 +45,7 @@ public class ConsistentHashingDemo {
    * Given a hash key and total buckets size, return the target bucket index
    * Consider use Function&lt;Integer, Function&lt;String, Integer&gt;&gt; Instead
    */
-  interface HashFunction extends BiFunction<String, Integer, Integer> {
+  interface Dispatcher extends BiFunction<String, Integer, Integer> {
   }
 
   public void run() {
@@ -61,7 +61,7 @@ public class ConsistentHashingDemo {
     benchmark(this::ringHashWithVirtualNode);
   }
 
-  private void benchmark(HashFunction func) {
+  private void benchmark(Dispatcher func) {
     log.info("==============  Benchmark start  ==============");
 
     arrange(DATA_SET, buckets, func);
@@ -71,13 +71,13 @@ public class ConsistentHashingDemo {
     log.info("==============  Benchmark stop  ==============");
   }
 
-  private void arrange(Set<String> dataSet, List<Bucket> buckets, HashFunction func) {
-    dataSet.forEach(it -> buckets.get(func.apply(it, buckets.size())).add(it));
+  private void arrange(Set<String> dataSet, List<Bucket> buckets, Dispatcher dispatcher) {
+    dataSet.forEach(it -> buckets.get(dispatcher.apply(it, buckets.size())).add(it));
   }
 
-  private void evaluate(Set<String> dataSet, List<Bucket> buckets, HashFunction function) {
+  private void evaluate(Set<String> dataSet, List<Bucket> buckets, Dispatcher dispatcher) {
     Map<String, Integer> originIdxMap = new HashMap<>();
-    dataSet.forEach(it -> originIdxMap.put(it, function.apply(it, buckets.size())));
+    dataSet.forEach(it -> originIdxMap.put(it, dispatcher.apply(it, buckets.size())));
 
     // correctness
     dataSet.forEach(it -> {
@@ -94,14 +94,14 @@ public class ConsistentHashingDemo {
 
     // Rates of change when buckets size increase
     Map<String, Integer> incrIdxMap = new HashMap<>();
-    dataSet.forEach(it -> incrIdxMap.put(it, function.apply(it, buckets.size() + 1)));
+    dataSet.forEach(it -> incrIdxMap.put(it, dispatcher.apply(it, buckets.size() + 1)));
 
     log.info("Calculate change when bucket size increase");
     calculateChangeRate(originIdxMap, incrIdxMap);
 
     // Rates of change when buckets size decrease
     Map<String, Integer> decrIdxMap = new HashMap<>();
-    dataSet.forEach(it -> decrIdxMap.put(it, function.apply(it, buckets.size() - 1)));
+    dataSet.forEach(it -> decrIdxMap.put(it, dispatcher.apply(it, buckets.size() - 1)));
 
     log.info("Calculate change when bucket size decrease");
     calculateChangeRate(originIdxMap, decrIdxMap);
