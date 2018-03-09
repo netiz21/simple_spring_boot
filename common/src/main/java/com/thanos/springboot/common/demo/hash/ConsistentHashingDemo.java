@@ -43,6 +43,7 @@ public class ConsistentHashingDemo {
 
   /**
    * Given a hash key and total buckets size, return the target bucket index
+   * Consider use Function&lt;Integer, Function&lt;String, Integer&gt;&gt; Instead
    */
   interface HashFunction extends BiFunction<String, Integer, Integer> {
   }
