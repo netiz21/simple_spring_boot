@@ -6,7 +6,10 @@ package com.thanos.springboot.common;
  */
 public enum ResponseEnum {
 
-  SUCCESS(0, ""), INVALID_PARAM(1001, "Invalid param"), INTERNAL_ERROR(1111, "Internal error");
+  SUCCESS(0, ""),
+  INVALID_PARAM(1001, "Invalid param"),
+  REQUEST_EXCEED(1002, "Request count exceed"),
+  INTERNAL_ERROR(1111, "Internal error");
 
   ResponseEnum(int status, String msg) {
     this.status = status;

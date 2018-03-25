@@ -3,7 +3,7 @@ package com.thanos.springboot.web;
 import com.thanos.springboot.bo.User;
 import com.thanos.springboot.common.ResponseEnum;
 import com.thanos.springboot.common.StandardResponse;
-import com.thanos.springboot.service.IUserService;
+import com.thanos.springboot.service.UserService;
 import com.thanos.springboot.vo.UserCreateReqVo;
 import com.thanos.springboot.vo.UserQueryReqVo;
 
@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
   @Autowired
-  private IUserService userService;
+  private UserService userService;
 
   @ApiOperation(value = "View user by id")
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

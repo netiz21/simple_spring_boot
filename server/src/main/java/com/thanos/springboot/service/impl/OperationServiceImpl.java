@@ -2,7 +2,7 @@ package com.thanos.springboot.service.impl;
 
 import com.thanos.springboot.bo.Operation;
 import com.thanos.springboot.dao.OperationDao;
-import com.thanos.springboot.service.IOperationService;
+import com.thanos.springboot.service.OperationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.Date;
  * @version 1.0
  */
 @Service
-public class OperationService implements IOperationService {
+public class OperationServiceImpl implements OperationService {
 
   @Autowired
   private OperationDao operationDao;

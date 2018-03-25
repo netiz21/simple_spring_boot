@@ -4,6 +4,9 @@ server:
 flyway:
   enabled: false
 spring:
+  mvc:
+    async:
+      request-timeout: -1
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver

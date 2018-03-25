@@ -3,7 +3,7 @@ package com.thanos.springboot.service.impl;
 import com.thanos.springboot.bo.User;
 import com.thanos.springboot.common.oplog.OpLog;
 import com.thanos.springboot.dao.UserDao;
-import com.thanos.springboot.service.IUserService;
+import com.thanos.springboot.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
  * @version 1.0
  */
 @Service
-public class UserService implements IUserService {
+public class UserServiceImpl implements UserService {
 
   @Autowired
   private UserDao userDao;

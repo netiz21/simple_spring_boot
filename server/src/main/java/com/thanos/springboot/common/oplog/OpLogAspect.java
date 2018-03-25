@@ -2,7 +2,7 @@ package com.thanos.springboot.common.oplog;
 
 import com.alibaba.fastjson.JSON;
 import com.thanos.springboot.bo.Operation;
-import com.thanos.springboot.service.IOperationService;
+import com.thanos.springboot.service.OperationService;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -25,7 +25,7 @@ public class OpLogAspect {
   private static final int MAX_STR_LENGTH = 200;
 
   @Autowired
-  private IOperationService operationService;
+  private OperationService operationService;
 
   @Pointcut("@annotation(com.thanos.springboot.common.oplog.OpLog)")
   public void logPoint() {
