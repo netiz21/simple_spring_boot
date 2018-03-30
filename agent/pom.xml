@@ -66,6 +66,7 @@
       <artifactId>asm-commons</artifactId>
     </dependency>
 
+    <!-- none jdk9 compatible now -->
     <dependency>
       <groupId>com.sun</groupId>
       <artifactId>tools</artifactId>
@@ -73,6 +74,7 @@
       <scope>system</scope>
       <systemPath>${java.home}/../lib/tools.jar</systemPath>
     </dependency>
+    <!-- none jdk9 compatible now -->
 
     <dependency>
       <groupId>net.bytebuddy</groupId>
